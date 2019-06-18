@@ -6,24 +6,29 @@
 
       <table class="student-table">
         <tr class="student-row">
-          <th class="student-email label">Email:</th>
-          <td class="student-email">{{ student.email }}<copy-button :copyText="student.email"></copy-button></td>
+          <th class="label">Email:</th>
+          <td class="student-email">{{ student.email }}</td>
+          <copy-button :copyText="student.email"></copy-button>
         </tr>
         <tr class="student-row">
-          <th class="student-student_id label">Student ID:</th>
-          <td class="student-student_id">{{ student.student_id }}<copy-button :copyText="student.student_id"></copy-button></td>
+          <th class="label">Student ID:</th>
+          <td class="student-student_id">{{ student.student_id }}</td>
+          <copy-button :copyText="student.student_id"></copy-button>
         </tr>
         <tr class="student-row">
-          <th class="student-slack_id label">Slack ID:</th>
-          <td class="student-slack_id">{{ student.slack_id }}<copy-button :copyText="student.slack_id"></copy-button></td>
+          <th class="label">Slack ID:</th>
+          <td class="student-slack_id">{{ student.slack_id }}</td>
+          <copy-button :copyText="student.slack_id"></copy-button>
         </tr>
         <tr class="student-row">
-          <th class="student-github_username label">GitHub Username:</th>
-          <td class="student-github_username">{{ student.github_username }}<copy-button :copyText="student.github_username"></copy-button></td>
+          <th class="label">GitHub Username:</th>
+          <td class="student-github_username">{{ student.github_username }}</td>
+          <copy-button :copyText="student.github_username"></copy-button>
         </tr>
         <tr class="student-row">
-          <th class="student-canvas_id label">Canvas ID:</th>
-          <td class="student-canvas_id">{{ student.canvas_id }}<copy-button :copyText="student.canvas_id"></copy-button></td>
+          <th class="label">Canvas ID:</th>
+          <td class="student-canvas_id">{{ student.canvas_id }}</td>
+          <copy-button :copyText="student.canvas_id"></copy-button>
         </tr>
       </table>
     </div>
@@ -90,8 +95,9 @@ td{
 }
 td{
   border: 1px solid black;
+  padding:0;
 }
-td button{
-  float:right;
+#copyButton{
+  padding-left: 5px;
 }
 </style>
