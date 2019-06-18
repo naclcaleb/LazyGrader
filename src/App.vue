@@ -1,16 +1,21 @@
 <template>
   <div id="app">
+   <VCHeader></VCHeader>
     <notifications group="build"/>
     <notifications group="grade"/>
     <router-view/>
+    <VCFooter></VCFooter>
   </div>
 </template>
 
 <script>
 import store from './store'
+import VCFooter from './components/Footer'
+import VCHeader from './components/Header'
 
 export default {
   name: 'App',
+  components: {VCHeader, VCFooter},
   created () {
     this.$store.initializeModules()
   },
@@ -24,7 +29,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #030000;
   margin-top: 60px;
+  padding-bottom: 30px;
 }
 </style>

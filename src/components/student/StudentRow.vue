@@ -33,6 +33,8 @@ export default {
 <style scoped>
 .student-row {
   display: table-row;
+  position: relative;
+  padding-bottom: 2.5rem;
 }
 
 .student-name, .student-email, .student-student_id, .student-slack_id, .student-github_username, .student-canvas_id {

@@ -4,28 +4,28 @@
     <div v-else>
       <h1>{{ student.name }}</h1>
 
-      <div class="student-table">
-        <div class="student-row">
-          <div class="student-email label">Email:</div>
-          <div class="student-email">{{ student.email }}</div>
-        </div>
-        <div class="student-row">
-          <div class="student-student_id label">Student ID:</div>
-          <div class="student-student_id">{{ student.student_id }}</div>
-        </div>
-        <div class="student-row">
-          <div class="student-slack_id label">Slack ID:</div>
-          <div class="student-slack_id">{{ student.slack_id }}</div>
-        </div>
-        <div class="student-row">
-          <div class="student-github_username label">GitHub Username:</div>
-          <div class="student-github_username">{{ student.github_username }}</div>
-        </div>
-        <div class="student-row">
-          <div class="student-canvas_id label">Canvas ID:</div>
-          <div class="student-canvas_id">{{ student.canvas_id }}</div>
-        </div>
-      </div>
+      <table class="student-table">
+        <tr class="student-row">
+          <th class="student-email label">Email:</th>
+          <td class="student-email">{{ student.email }}<copy-button :copyText="student.email"></copy-button></td>
+        </tr>
+        <tr class="student-row">
+          <th class="student-student_id label">Student ID:</th>
+          <td class="student-student_id">{{ student.student_id }}<copy-button :copyText="student.student_id"></copy-button></td>
+        </tr>
+        <tr class="student-row">
+          <th class="student-slack_id label">Slack ID:</th>
+          <td class="student-slack_id">{{ student.slack_id }}<copy-button :copyText="student.slack_id"></copy-button></td>
+        </tr>
+        <tr class="student-row">
+          <th class="student-github_username label">GitHub Username:</th>
+          <td class="student-github_username">{{ student.github_username }}<copy-button :copyText="student.github_username"></copy-button></td>
+        </tr>
+        <tr class="student-row">
+          <th class="student-canvas_id label">Canvas ID:</th>
+          <td class="student-canvas_id">{{ student.canvas_id }}<copy-button :copyText="student.canvas_id"></copy-button></td>
+        </tr>
+      </table>
     </div>
     <h2>Courses</h2>
     <div v-if="courses == null" class="loading">Loading...</div>
@@ -38,10 +38,11 @@
 import lazy from '../../lib/vclazygrader'
 import StudentCourses from './StudentCourses'
 import VCFooter from '../Footer'
+import CopyButton from '../components/CopyButton'
 
 export default {
   name: 'Student',
-  components: {StudentCourses, VCFooter},
+  components: {CopyButton, StudentCourses, VCFooter},
   data () {
     return {
       student: null,
@@ -63,7 +64,6 @@ export default {
 
 <style scoped>
 .student-table {
-  display: table;
   margin: auto;
 }
 
@@ -73,12 +73,18 @@ export default {
 
 .student-email, .student-student_id, .student-slack_id, .student-github_username, .student-canvas_id {
   display: table-cell;
-  text-align: left;
+  text-align: center;
 }
 
 .label {
   font-weight: bold;
   text-align: right;
   padding-right: 10px;
+}
+td{
+  border: 1px solid black;
+}
+td button{
+  float:right;
 }
 </style>

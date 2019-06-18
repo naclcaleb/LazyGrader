@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    {{ text }}
+    <footer>{{ text }}</footer>
   </div>
 </template>
 
@@ -16,12 +16,15 @@ export default {
 </script>
 
 <style scoped>
-.footer {
+.footer footer{
   font-style: italic;
   font-weight: lighter;
   font-size: x-small;
-  position: fixed;
-  bottom: 5px;
-  width: 100%
+  background-color:#FF6C0E;
+  position:fixed;
+  left:0;
+  bottom:0;
+  height:30px;
+  width:100%;
 }
 </style>

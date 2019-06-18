@@ -5,6 +5,7 @@ import Course from '../components/course/Course'
 import CourseEdit from '../components/course/CourseEdit'
 import Students from '../components/student/index'
 import Student from '../components/student/Student'
+import About from '../components/About'
 import Assignments from '../components/assignment/index'
 import Assignment from '../components/assignment/Assignment'
 import AssignmentEdit from '../components/assignment/AssignmentEdit'
@@ -57,6 +58,11 @@ export default new Router({
       path: '/assignment/:id/edit',
       name: 'assignment-edit',
       component: AssignmentEdit
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     }
   ]
 })
