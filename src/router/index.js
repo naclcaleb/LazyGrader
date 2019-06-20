@@ -6,9 +6,12 @@ import CourseEdit from '../components/course/CourseEdit'
 import Students from '../components/student/index'
 import Student from '../components/student/Student'
 import About from '../components/About'
+import Settings from '../components/Settings'
 import Assignments from '../components/assignment/index'
 import Assignment from '../components/assignment/Assignment'
 import AssignmentEdit from '../components/assignment/AssignmentEdit'
+import Login from '../components/Login'
+import Signup from '../components/Signup'
 
 Vue.use(Router)
 
@@ -63,6 +66,21 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     }
   ]
 })

@@ -3,7 +3,12 @@
     <li class="logo"><a href="https://www.venturacollege.edu/" target="_blank"><img src="../assets/VC-logo.png" alt=""/></a></li>
     <li><router-link :to="{name: 'home'}">Home</router-link></li>
      <li><router-link :to="{name: 'students'}">Students</router-link></li>
+    <li><router-link :to="{name: 'settings'}">Settings</router-link></li>
     <li><router-link :to="{name: 'about'}">About</router-link></li>
+    <div id="authLinks">
+      <li><router-link :to="{name: 'login'}">Log In</router-link></li>
+      <li><router-link :to="{name: 'signup'}">Sign Up</router-link></li>
+    </div>
   </ul>
 </template>
 <script>
@@ -49,5 +54,12 @@ export default {
     height:49px;
     padding:0;
     margin:0;
+  }
+  #authLinks li a{
+    border-left: 1px solid #cecece;
+    border-right: 0 !important;
+  }
+  #authLinks li{
+    float: right !important;
   }
 </style>
