@@ -2,12 +2,12 @@
   <div id="settings">
     <h1>Settings</h1>
     <form @submit.prevent="handleSubmit">
-      <table>
+      <table v-if="loaded">
         <tr>
           <td>
             <label for="siteTitle"><b>Website Title</b></label>
             <br>
-            <input type="text" id="siteTitle" :placeholder="siteTitle" v-bind:value="settings.title"/>
+            <input type="text" id="siteTitle" :placeholder="siteTitle" :value="settings.title"/>
           </td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'Vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'Settings',
   data () {
@@ -67,7 +67,8 @@ export default {
       backendHost: '',
       CanvasURL: '',
       JenkinsURL: '',
-      uploadSecrets: null
+      uploadSecrets: null,
+      loaded: false
     }
   },
   computed: {
@@ -100,6 +101,7 @@ export default {
   mounted () {
     this.fetch().then(response => {
       console.log(response)
+      this.loaded = true
     })
   }
 }
