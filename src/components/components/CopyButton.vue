@@ -6,11 +6,16 @@
 export default {
   name: 'CopyButton',
   props: {
-    copyText: Object
+    copyText: String
   },
   methods: {
     copy: function () {
       navigator.clipboard.writeText(this.copyText)
+      this.$notify({
+        group: 'copy',
+        title: 'Copied Text',
+        text: 'Copied "' + this.copyText + '" to clipboard'
+      })
     }
   }
 }

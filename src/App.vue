@@ -1,8 +1,10 @@
 <template>
   <div id="app">
    <VCHeader></VCHeader>
-    <notifications group="build"/>
-    <notifications group="grade"/>
+      <notifications group="build"/>
+      <notifications group="grade"/>
+      <notifications group="copy"/>
+      <notifications group="settings"/>
     <router-view/>
     <VCFooter></VCFooter>
   </div>

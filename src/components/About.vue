@@ -1,5 +1,6 @@
 <template>
   <div id="about">
+    <h1>About</h1>
     <p>LazyGrader website created by Allan & Todd Knight</p>
     <p class="link">Github:  </p><a href="https://github.com/ProfKnight/LazyGrader">https://github.com/ProfKnight/LazyGrader</a>
   </div>
