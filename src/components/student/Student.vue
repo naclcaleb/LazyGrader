@@ -28,7 +28,7 @@
         <tr class="student-row">
           <th class="label">Canvas ID:</th>
           <td class="student-canvas_id">{{ student.canvas_id }}</td>
-          <copy-button :copyText="student.canvas_id"></copy-button>
+          <copy-button :copyText="student.canvas_id.toString()"></copy-button>
         </tr>
       </table>
     </div>
