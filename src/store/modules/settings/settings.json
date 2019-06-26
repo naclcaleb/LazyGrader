@@ -1,0 +1,7 @@
+{
+  "title": "Website",
+  "college_name": "Ventura College",
+  "backend_host": "localhost",
+  "canvas_url": "https://vcccd.instructure.com",
+  "jenkins_url": "http://209.129.49.16:8080"
+}

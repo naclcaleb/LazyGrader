@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="edit-link">
-        <router-link :to="{name: 'course-edit', params: {id: course.id}}">
+        <router-link :to="{name: 'course-edit', params: {id: course.id}}" tag="button">
           Edit
         </router-link>
       </div>

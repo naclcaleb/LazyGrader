@@ -19,13 +19,6 @@
         </tr>
         <tr>
           <td>
-            <label for="backendHost"><b>Backend Hostname</b></label>
-            <br>
-            <input type="text" id="backendHost" :placeholder="backendHost" :value="settings.backend_host"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
             <label for="canvasUrl"><b>Canvas URL</b></label>
             <br>
             <input type="text" id="canvasUrl" :placeholder="CanvasURL" :value="settings.canvas_url"/>
@@ -42,7 +35,7 @@
           <td>
             <label for="uploadSecrets"><b>Upload Secrets</b></label>
             <br>
-            <input type="file" id="uploadSecrets">
+            <input type="file" ref="uploadSecrets" @change="onSelect" id="uploadSecrets">
           </td>
         </tr>
         <tr>
@@ -80,13 +73,24 @@ export default {
     ...mapActions({
       fetch: 'settings/fetch'
     }),
-    handleSubmit: function () {
+    handleSubmit: async function () {
+      const formData = new FormData()
+      formData.append('file', this.file)
+      try {
+        let response = await axios.post('http://localhost:3000/api/v1/settings/secrets', formData)
+        console.log('File uploaded: ' + response)
+      } catch (err) {
+        console.log(err)
+      }
       this.$notify({
         group: 'settings',
         title: 'Edit Complete',
         text: 'Changes saved'
 
       })
+    },
+    onSelect: function () {
+      this.file = this.$refs.uploadSecrets.files[0]
     },
     cancelSubmit: function () {
       this.$notify({
