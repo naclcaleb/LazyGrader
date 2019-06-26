@@ -32,9 +32,17 @@ export default {
   actions: {
     fetch: function (context, data) {
       context.commit('loaded', false)
-      return Vue.axios.get(lazy.url('/settings'))
+      return Vue.axios.get(lazy.url('settings'))
         .then(response => {
           context.commit('settings', response.data[0])
+          return Promise.resolve(response)
+        })
+    },
+
+    upload: function (context, data) {
+      console.log('data: ', data)
+      return Vue.axios.post(lazy.url('settings/upload'), data)
+        .then(response => {
           return Promise.resolve(response)
         })
     }
