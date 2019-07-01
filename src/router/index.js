@@ -5,6 +5,7 @@ import Course from '../components/course/Course'
 import CourseEdit from '../components/course/CourseEdit'
 import Students from '../components/student/index'
 import Student from '../components/student/Student'
+import StudentEdit from '../components/student/StudentEdit'
 import About from '../components/About'
 import Settings from '../components/Settings'
 import Assignments from '../components/assignment/index'
@@ -81,6 +82,11 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: Signup
+    },
+    {
+      path: '/student/:id/edit',
+      name: 'student-edit',
+      component: StudentEdit
     }
   ]
 })

@@ -5,6 +5,7 @@
       <notifications group="grade"/>
       <notifications group="copy"/>
       <notifications group="settings"/>
+      <notifications group="edit"/>
     <router-view/>
     <VCFooter></VCFooter>
   </div>

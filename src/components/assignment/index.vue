@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <h2>Assignments</h2>
+      <h1>Assignments</h1>
       <div v-for="course in courses" :key="course.id">
         <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
         <div class="assignments-table">

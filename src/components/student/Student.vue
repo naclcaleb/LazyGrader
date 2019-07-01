@@ -35,7 +35,7 @@
     <h2>Courses</h2>
     <div v-if="courses == null" class="loading">Loading...</div>
     <student-courses v-else :courses="courses"/>
-    <v-c-footer/>
+    <router-link :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
   </div>
 </template>
 
@@ -85,13 +85,6 @@ export default {
   font-weight: bold;
   text-align: right;
   padding-right:5px;
-}
-td{
-  border: 1px solid black;
-  padding:0;
-}
-#copyButton{
-  padding-left: 5px;
 }
 td{
   border: 1px solid black;

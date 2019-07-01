@@ -1,38 +1,43 @@
 <template>
   <div v-if="assignment !== null">
     <h1>{{assignment.name}}</h1>
-    <div class="assignment-table">
-      <div class="assignment-row">
-        <div class="assignment-url label">GitHub Classroom</div>
-        <div class="assignment-url">{{assignment.invitation_url}}</div>
-      </div>
-      <div class="assignment-row">
-        <div class="assignment-due label">Due</div>
-        <div class="assignment-due">{{assignment.due_date}}</div>
-      </div>
-      <div class="assignment-row">
-        <div class="assignment-open label">Opens</div>
-        <div class="assignment-open">{{assignment.open_date}}</div>
-      </div>
-      <div class="assignment-row">
-        <div class="assignment-close label">Closes</div>
-        <div class="assignment-close">{{assignment.close_date}}</div>
-      </div>
-      <div class="assignment-row">
-        <div class="assignment-canvas_id label">Canvas ID</div>
-        <div class="assignment-canvas_id">
+    <table class="assignment-table">
+      <tr class="assignment-row">
+        <th class="assignment-url label">GitHub Classroom:</th>
+        <td class="assignment-url">{{assignment.invitation_url}}</td>
+        <copy-button :copyText="assignment.invitation_url"></copy-button>
+      </tr>
+      <tr class="assignment-row">
+        <th class="assignment-due label">Due:</th>
+        <td class="assignment-due">{{assignment.due_date}}</td>
+        <copy-button :copyText="assignment.due_date"></copy-button>
+      </tr>
+      <tr class="assignment-row">
+        <th class="assignment-open label">Opens:</th>
+        <td class="assignment-open">{{assignment.open_date}}</td>
+        <copy-button :copyText="assignment.open_date"></copy-button>
+      </tr>
+      <tr class="assignment-row">
+        <th class="assignment-close label">Closes:</th>
+        <td class="assignment-close">{{assignment.close_date}}</td>
+        <copy-button :copyText="assignment.close_date"></copy-button>
+      </tr>
+      <tr class="assignment-row">
+        <th class="assignment-canvas_id label">Canvas ID:</th>
+        <td class="assignment-canvas_id">
           <a :href="canvas_url">{{assignment.canvas_id}}</a>
-        </div>
-      </div>
+        </td>
+        <copy-button :copyText="assignment.canvas_id"></copy-button>
+      </tr>
+    </table>
+    <div class="edit-link" >
+      <router-link :to="{name: 'assignment-edit', params: { id: assignment.id}}" tag="button">Edit</router-link>
     </div>
-    <div>
+      <div>
       <h2>Students</h2>
       <div class="students-table">
         <assignment-student-row v-for="enrollment in assignment.course.enrollments" :student_id="enrollment.student_id" :assignment="assignment" :key="enrollment.id"/>
       </div>
-    </div>
-    <div class="edit-link" >
-      <router-link :to="{name: 'assignment-edit', params: { id: assignment.id}}">Edit</router-link>
     </div>
   </div>
 </template>
@@ -40,10 +45,11 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 import AssignmentStudentRow from './AssignmentStudentRow'
+import CopyButton from '../components/CopyButton'
 
 export default {
   name: 'Assignment',
-  components: {AssignmentStudentRow},
+  components: {CopyButton, AssignmentStudentRow},
   data () {
     return {
       assignment: null,
@@ -80,25 +86,26 @@ export default {
 </script>
 
 <style scoped>
-.assignment-table, .students-table {
+.students-table {
   display: table;
   margin: auto;
 }
-
-.assignment-row {
-  display: table-row;
+table{
+  margin: auto;
 }
-
-.assignment-url, .assignment-due, .assignment-open, .assignment-close, .assignment-canvas_id {
-  display: table-cell;
+table tr {}
+table tr td{
   padding-left: 5px;
   padding-right: 5px;
   text-align: left;
+  border: 1px solid black;
 }
 
 .label {
   font-weight: bold;
   text-align: right;
+  padding-right: 5px;
+  border: 0;
 }
 
 .edit-link {
