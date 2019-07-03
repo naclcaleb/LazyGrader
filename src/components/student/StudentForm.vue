@@ -20,13 +20,6 @@
         </tr>
         <tr>
           <td>
-            <label for="student-id"><b>Student ID: </b></label>
-            <br>
-            <input type="text" id="student-id" :placeholder="local_student.student_id" v-model="local_student.student_id">
-          </td>
-        </tr>
-        <tr>
-          <td>
             <label for="student-slack-id"><b>Slack ID: </b></label>
             <br>
             <input type="text" id="student-slack-id" :placeholder="local_student.slack_id" v-model="local_student.slack_id">
@@ -37,13 +30,6 @@
             <label for="student-github-username"><b>GitHub Username: </b></label>
             <br>
             <input type="text" id="student-github-username" :placeholder="local_student.github_username" v-model="local_student.github_username">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="student-canvas-id"><b>Canvas ID: </b></label>
-            <br>
-            <input type="text" id="student-canvas-id" :placeholder="local_student.canvas_id" v-model="local_student.canvas_id">
           </td>
         </tr>
         <tr>
@@ -59,6 +45,7 @@
 
 <script>
 import lazy from '../../lib/vclazygrader'
+import {mapActions} from 'vuex'
 export default {
   name: 'StudentForm',
   data () {
@@ -67,19 +54,26 @@ export default {
       selected: 0
     }
   },
+  computed: {
+
+  },
   mounted () {
     lazy.get_student(this.$route.params.id, {success: function (response) {
       this.local_student = response.data
     }.bind(this)})
   },
   methods: {
+    ...mapActions({upload: 'student/upload'}),
     handleSubmit: function () {
-      this.$router.push({name: 'student', params: {id: this.local_student.id}})
-      this.$notify({
-        group: 'edit',
-        title: 'Edit Complete',
-        text: 'Changes saved'
-      })
+      this.upload(this.local_student)
+        .then(response => {
+          this.$router.push({name: 'student', params: {id: this.local_student.id}})
+          this.$notify({
+            group: 'edit',
+            title: 'Edit Complete',
+            text: 'Changes saved'
+          })
+        })
     },
     cancelSubmit: function () {
       this.$router.push({name: 'student', params: {id: this.local_student.id}})

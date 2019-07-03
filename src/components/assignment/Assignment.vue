@@ -4,7 +4,7 @@
     <table class="assignment-table">
       <tr class="assignment-row">
         <th class="assignment-url label">GitHub Classroom:</th>
-        <td class="assignment-url">{{assignment.invitation_url}}</td>
+        <td class="assignment-url"><a v-bind:href="assignment.invitation_url" target="_blank">{{assignment.invitation_url}}</a></td>
         <copy-button :copyText="assignment.invitation_url"></copy-button>
       </tr>
       <tr class="assignment-row">
@@ -25,7 +25,7 @@
       <tr class="assignment-row">
         <th class="assignment-canvas_id label">Canvas ID:</th>
         <td class="assignment-canvas_id">
-          <a :href="canvas_url">{{assignment.canvas_id}}</a>
+          <a :href="canvas_url" target="_blank">{{assignment.canvas_id}}</a>
         </td>
         <copy-button :copyText="assignment.canvas_id"></copy-button>
       </tr>

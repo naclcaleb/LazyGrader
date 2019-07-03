@@ -35,7 +35,7 @@
     <h2>Courses</h2>
     <div v-if="courses == null" class="loading">Loading...</div>
     <student-courses v-else :courses="courses"/>
-    <router-link :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
+    <router-link v-if="student != null" :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
   </div>
 </template>
 
@@ -44,6 +44,7 @@ import lazy from '../../lib/vclazygrader'
 import StudentCourses from './StudentCourses'
 import VCFooter from '../Footer'
 import CopyButton from '../components/CopyButton'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Student',
@@ -54,12 +55,32 @@ export default {
       courses: []
     }
   },
+  computed: {
+    ...mapGetters({
+      studentInfo: 'student/find',
+      studentLoaded: 'student/loaded'
+    })
+  },
+  methods: {
+    ...mapActions({
+      fetch: 'student/fetch'
+    }),
+    update: function () {
+      this.student = this.studentInfo(this.$route.params.id)
+      this.loading = false
+    }
+  },
   mounted () {
-    var context = this
-    lazy.get_student(this.$route.params.id, {success: function (response) {
-      context.student = response.data
-    }})
+    if (!this.studentLoaded) {
+      this.fetch()
+        .then(response => {
+          this.update()
+        })
+    } else {
+      this.update()
+    }
 
+    let context = this
     lazy.get_courses_for(this.$route.params.id, {success: function (response) {
       context.courses = response.data
     }})

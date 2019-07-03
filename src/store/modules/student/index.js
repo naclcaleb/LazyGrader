@@ -38,9 +38,15 @@ export default {
   actions: {
     fetch: function (context, data) {
       context.commit('loaded', false)
-      return Vue.axios.get(lazy.url('/students'))
+      return Vue.axios.get(lazy.url('students'))
         .then(response => {
           context.commit('collection', response.data)
+          return Promise.resolve(response)
+        })
+    },
+    upload: function (context, data) {
+      return Vue.axios.put(lazy.url(`students/${data.id}`), data)
+        .then(response => {
           return Promise.resolve(response)
         })
     }

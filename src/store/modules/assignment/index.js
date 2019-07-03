@@ -43,6 +43,12 @@ export default {
           context.commit('collection', response.data)
           return Promise.resolve(response)
         })
+    },
+    upload: function (context, data) {
+      return Vue.axios.put(lazy.url(`assignments/${data.id}`), data)
+        .then(response => {
+          return Promise.resolve(response)
+        })
     }
   }
 }
