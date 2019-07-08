@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
     <div v-if="loading">Loading...</div>
     <div v-else class="courses-table">
+      <h1>{{ title }}</h1>
       <div class="course-row">
         <div class="course-name table-header">Course Info</div>
         <div class="course-term table-header">Info</div>
@@ -21,22 +21,30 @@ export default {
   components: {CourseRow},
   data () {
     return {
-      title: 'Ventura College Courses',
       loading: true
     }
   },
   computed: {
     ...mapGetters({
       courses: 'course/collection',
-      find: 'course/find'
-    })
+      find: 'course/find',
+      college_name: 'settings/college_name'
+    }),
+    title: function () {
+      return this.college_name + ' Courses'
+    }
   },
   methods: {
-    ...mapActions({fetch: 'course/fetch'})
+    ...mapActions({
+      fetch: 'course/fetch',
+      fetch_settings: 'settings/fetch'
+    })
   },
   mounted () {
     this.fetch().then(response => {
-      this.loading = false
+      this.fetch_settings().then(response => {
+        this.loading = false
+      })
     })
   }
 }

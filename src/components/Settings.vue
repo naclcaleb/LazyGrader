@@ -78,7 +78,14 @@ export default {
 
     handleSubmit: function () {
       console.log('Settings: ', this.local_settings)
-      this.upload(this.local_settings)
+      let keys = Object.keys(this.local_settings)
+      let data = {}
+      for (let i = 0; i < keys.length; i++) {
+        if (this.local_settings[keys[i]].length > 0) {
+          data[keys[i]] = this.local_settings[keys[i]]
+        }
+      }
+      this.upload(data)
         .then(response => {
           this.$notify({
             group: 'settings',

@@ -13,6 +13,22 @@ export default {
       return state.settings
     },
 
+    title: state => {
+      return state.settings.title
+    },
+
+    college_name: state => {
+      return state.settings.college_name
+    },
+
+    canvas_url: state => {
+      return state.settings.canvas_url
+    },
+
+    jenkins_url: state => {
+      return state.settings.jenkins_url
+    },
+
     loaded: state => {
       return state.loaded
     }
