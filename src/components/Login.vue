@@ -1,19 +1,20 @@
 <template>
   <div id="login">
     <h1>Log In</h1>
+    <form @submit.prevent="handleSubmit">
     <table>
       <tr>
         <td>
           <label for="uname"><b>Username</b></label>
           <br>
-          <input type="text" placeholder="Enter Username" id="uname" required>
+          <input type="text" placeholder="Enter Username" v-model="sign_in.email" required>
         </td>
       </tr>
       <tr>
         <td>
           <label for="psw"><b>Password</b></label>
           <br>
-          <input type="password" placeholder="Enter Password" id="psw" required>
+          <input type="password" placeholder="Enter Password" v-model="sign_in.password" required>
         </td>
       </tr>
       <tr>
@@ -29,12 +30,46 @@
         </td>
       </tr>
     </table>
+    </form>
   </div>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      sign_in: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      authenticate: 'user/authenticated',
+      user: 'user/user'
+    })
+  },
+  methods: {
+    ...mapActions({
+      signIn: 'user/sign_in'
+    }),
+    handleSubmit: function () {
+      this.signIn(this.sign_in)
+        .then(response => {
+          console.log('Sign in: ', response)
+        })
+        .catch(error => {
+          console.log('Authentication failed: ', error)
+        })
+    }
+  },
+  mounted () {
+    console.log('Role: ', this.user)
+  }
 }
 </script>
 

@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const backendHost = 'localhost:3000'
 const apiPrefix = 'api/v1'
+const authPrefix = 'auth'
 
 function lazyRequest (path, handlers) {
   axios
@@ -83,6 +84,10 @@ const lazy = {
 
   url: function (path) {
     return `http://${backendHost}/${apiPrefix}/${path}`
+  },
+
+  auth: function (path) {
+    return `http://${backendHost}/${authPrefix}/${path}`
   }
 }
 

@@ -30,7 +30,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      students: 'student/collection'
+      students: 'student/collection',
+      students_loaded: 'student/loaded'
     })
   },
   methods: {
@@ -39,10 +40,12 @@ export default {
     })
   },
   mounted () {
-    this.fetch()
-      .then(response => {
-        this.loading = false
-      })
+    if (!this.students_loaded) {
+      this.fetch()
+        .then(response => {
+          console.log('Loaded')
+        })
+    }
   }
 }
 </script>

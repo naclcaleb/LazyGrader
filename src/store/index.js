@@ -5,6 +5,8 @@ import course from './modules/course'
 import assignment from './modules/assignment'
 import student from './modules/student'
 import settings from './modules/settings'
+import user from './modules/user'
+
 Vue.use(Vuex)
 
 export default _.merge(new Vuex.Store({
@@ -15,6 +17,7 @@ export default _.merge(new Vuex.Store({
     this.registerModule('assignment', assignment)
     this.registerModule('student', student)
     this.registerModule('settings', settings)
+    this.registerModule('user', user)
   },
 
   resetModules () {
@@ -22,5 +25,6 @@ export default _.merge(new Vuex.Store({
     this.unregisterModule('assignment')
     this.unregisterModule('student')
     this.unregisterModule('settings')
+    this.unregisterModule('user')
   }
 })

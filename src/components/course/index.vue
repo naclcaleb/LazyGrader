@@ -27,6 +27,7 @@ export default {
   computed: {
     ...mapGetters({
       courses: 'course/collection',
+      courses_loaded: 'course/loaded',
       find: 'course/find',
       college_name: 'settings/college_name'
     }),
@@ -41,11 +42,13 @@ export default {
     })
   },
   mounted () {
-    this.fetch().then(response => {
-      this.fetch_settings().then(response => {
+    if (this.courses_loaded) {
+      this.loading = false
+    } else {
+      this.fetch().then(response => {
         this.loading = false
       })
-    })
+    }
   }
 }
 </script>

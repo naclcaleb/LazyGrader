@@ -36,7 +36,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      courses: 'course/collection'
+      courses: 'course/collection',
+      courses_loaded: 'course/loaded'
     })
   },
   methods: {
@@ -46,10 +47,14 @@ export default {
   },
 
   mounted () {
-    this.fetch_courses()
-      .then(resonse => {
-        this.loading = false
-      })
+    if (this.courses_loaded) {
+      this.loading = false
+    } else {
+      this.fetch_courses()
+        .then(resonse => {
+          this.loading = false
+        })
+    }
   }
 }
 

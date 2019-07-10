@@ -33,7 +33,6 @@ export default {
   created () {
     this.$store.initializeModules()
     this.fetch().then(response => {
-      console.log(this.title)
       document.title = this.title
     })
   },

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
   name: 'Settings',
   data () {
@@ -76,14 +76,19 @@ export default {
       upload: 'settings/upload'
     }),
 
+    ...mapMutations({
+      updateTitle: 'settings/title'
+    }),
+
     handleSubmit: function () {
-      console.log('Settings: ', this.local_settings)
-      let keys = Object.keys(this.local_settings)
       let data = {}
-      for (let i = 0; i < keys.length; i++) {
-        if (this.local_settings[keys[i]].length > 0) {
-          data[keys[i]] = this.local_settings[keys[i]]
+      for (let key in this.local_settings) {
+        if (this.local_settings[key].length > 0) {
+          data[key] = this.local_settings[key]
         }
+      }
+      if (this.local_settings.title.length > 0) {
+        this.updateTitle(this.local_settings.title)
       }
       this.upload(data)
         .then(response => {

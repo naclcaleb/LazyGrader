@@ -40,6 +40,11 @@ export default {
       state.loaded = true
     },
 
+    title: function (state, title) {
+      state.settings.title = title
+      document.title = title
+    },
+
     loaded: function (state, data) {
       state.loaded = data
     }
