@@ -1,8 +1,8 @@
 <template>
   <div id="settings">
     <h1>Settings</h1>
-    <form @submit.prevent="handleSubmit">
-      <table v-if="loaded">
+    <form @submit.prevent="handleSubmit"  v-if="loaded && authenticated">
+      <table>
         <tr>
           <td>
             <label for="siteTitle"><b>Website Title</b></label>
@@ -33,9 +33,9 @@
         </tr>
         <tr>
           <td>
-            <label><b>Upload Secrets</b></label>
+            <label for = "secrets"><b>Upload Secrets</b></label>
             <br>
-            <textarea v-model="local_settings.secrets"></textarea>
+            <textarea v-model="local_settings.secrets" id="secrets"></textarea>
           </td>
         </tr>
         <tr>
@@ -46,6 +46,8 @@
         </tr>
       </table>
     </form>
+    <div v-else-if="authenticated">Loading</div>
+    <div v-else>Error. Unauthorized user.</div>
   </div>
 </template>
 
@@ -67,6 +69,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      authenticated: 'user/authenticated',
       remote_settings: 'settings/settings'
     })
   },

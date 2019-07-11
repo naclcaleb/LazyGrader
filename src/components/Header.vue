@@ -2,18 +2,18 @@
   <ul id="navbar">
     <li class="logo"><a href="https://www.venturacollege.edu/" target="_blank"><img src="../assets/VC-logo.png" alt=""/></a></li>
     <li><router-link :to="{name: 'home'}">Home</router-link></li>
-    <li><router-link :to="{name: 'students'}">Students</router-link></li>
-    <li><router-link :to="{name: 'assignments'}">Assignments</router-link></li>
+    <li v-if="authenticated"><router-link :to="{name: 'students'}">Students</router-link></li>
+    <li v-if="authenticated"><router-link :to="{name: 'assignments'}">Assignments</router-link></li>
     <li v-if="authenticated && user && user.role == 'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></li>
     <li><router-link :to="{name: 'about'}">About</router-link></li>
     <div id="authLinks">
       <li v-if="!authenticated"><router-link :to="{name: 'login'}">Log In</router-link></li>
-      <li v-if="authenticated"><router-link :to="{name: 'logout'}">Log Out</router-link></li>
+      <li v-if="authenticated"><router-link :to="{name: 'home'}" v-on:click="signOut">Log Out</router-link></li>
     </div>
   </ul>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'VCHeader',
@@ -21,6 +21,11 @@ export default {
     ...mapGetters({
       authenticated: 'user/authenticated',
       user: 'user/user'
+    })
+  },
+  methods: {
+    ...mapActions({
+      signOut: 'user/sign_out'
     })
   }
 }

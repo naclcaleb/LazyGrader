@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <div v-if="students == null" class="loading">Loading...</div>
+    <div v-if="students == null && authenticated" class="loading">Loading...</div>
+    <div v-else-if="!authenticated">Error. Unauthorized user.</div>
     <div v-else class="students-table">
       <div class="student-row">
         <div class="student-name header">Name</div>
@@ -30,6 +31,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      authenticated: 'user/authenticated',
       students: 'student/collection',
       students_loaded: 'student/loaded'
     })

@@ -7,14 +7,14 @@
         <td>
           <label for="uname"><b>Username</b></label>
           <br>
-          <input type="text" placeholder="Enter Username" v-model="sign_in.email" required>
+          <input type="text" id="uname" placeholder="Enter Username" v-model="sign_in.email" required>
         </td>
       </tr>
       <tr>
         <td>
           <label for="psw"><b>Password</b></label>
           <br>
-          <input type="password" placeholder="Enter Password" v-model="sign_in.password" required>
+          <input type="password" id="psw" placeholder="Enter Password" v-model="sign_in.password" required>
         </td>
       </tr>
       <tr>
@@ -31,6 +31,9 @@
       </tr>
     </table>
     </form>
+    <div id="error" v-if="failed">
+      <p>Invalid email or password. Please try again</p>
+    </div>
   </div>
 </template>
 
@@ -44,7 +47,8 @@ export default {
       sign_in: {
         email: '',
         password: ''
-      }
+      },
+      failed: false
     }
   },
   computed: {
@@ -61,9 +65,24 @@ export default {
       this.signIn(this.sign_in)
         .then(response => {
           console.log('Sign in: ', response)
+          this.$notify({
+            group: 'auth',
+            title: 'Logged In',
+            text: 'Signed in as ' + this.user.email
+          })
+          this.$router.push({
+            name: 'courses'
+          })
         })
         .catch(error => {
           console.log('Authentication failed: ', error)
+          this.failed = true
+          this.$notify({
+            group: 'auth',
+            title: 'Error',
+            text: 'Invalid email or password',
+            type: 'warn'
+          })
         })
     }
   },
@@ -83,5 +102,15 @@ export default {
   #login table{
     text-align: left;
     margin:auto;
+  }
+  #error{
+    border: 3px solid #c40303;
+    text-align: center;
+    vertical-align: middle;
+    width: 350px;
+    height: 40px;
+    margin: auto;
+    color: #9c0303;
+    background-color: #d47474;
   }
 </style>

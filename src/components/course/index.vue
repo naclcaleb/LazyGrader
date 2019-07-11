@@ -42,6 +42,11 @@ export default {
     })
   },
   mounted () {
+    this.fetch().then(response => {
+      this.fetch_settings().then(response => {
+        this.loading = false
+      })
+    })
     if (this.courses_loaded) {
       this.loading = false
     } else {

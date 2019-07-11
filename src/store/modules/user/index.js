@@ -79,14 +79,14 @@ export default {
         })
     },
 
-    sign_out: function (context) {
-      return Vue.axios.delete(lazy.auth('sign_in'), {headers: {
-        'access-token': context.token,
-        'client': context.client,
-        'uid': context.uid
+    sign_out: function ({commit, state}) {
+      return Vue.axios.delete(lazy.auth('sign_out'), {headers: {
+        'access-token': state.token,
+        'client': state.client,
+        'uid': state.uid
       }})
         .then(response => {
-          context.commit('authenticated', false)
+          commit('authenticated', false)
           return Promise.resolve(response)
         })
         .catch(error => {

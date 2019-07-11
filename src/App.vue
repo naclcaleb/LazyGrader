@@ -6,6 +6,7 @@
       <notifications group="copy"/>
       <notifications group="settings"/>
       <notifications group="edit"/>
+      <notifications group="auth"/>
     <router-view/>
     <VCFooter></VCFooter>
   </div>

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
+    <h1>Assignments</h1>
+    <div v-if="loading && authenticated">Loading...</div>
+    <div v-else-if="!authenticated">Error. Unauthorized user.</div>
     <div v-else>
-      <h1>Assignments</h1>
       <div v-for="course in courses" :key="course.id">
         <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
         <div class="assignments-table">
@@ -36,6 +37,7 @@ export default {
 
   computed: {
     ...mapGetters({
+      authenticated: 'user/authenticated',
       courses: 'course/collection',
       courses_loaded: 'course/loaded'
     })
