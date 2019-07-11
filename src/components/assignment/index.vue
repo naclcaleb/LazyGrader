@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Assignment',
@@ -36,8 +36,10 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      authenticated: state => state.user.authenticated
+    }),
     ...mapGetters({
-      authenticated: 'user/authenticated',
       courses: 'course/collection',
       courses_loaded: 'course/loaded'
     })

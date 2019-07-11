@@ -12,10 +12,6 @@ export default {
   },
 
   getters: {
-    user: state => {
-      return state.user
-    },
-
     token: state => {
       return state.token
     },
@@ -34,10 +30,6 @@ export default {
 
     headers: state => {
       return {'access-token': state.token, client: state.client, uid: state.uid}
-    },
-
-    authenticated: state => {
-      return state.authenticated
     }
   },
 

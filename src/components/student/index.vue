@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 import StudentRow from './StudentRow'
 
 export default {
@@ -30,8 +30,10 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      authenticated: state => state.user.authenticated
+    }),
     ...mapGetters({
-      authenticated: 'user/authenticated',
       students: 'student/collection',
       students_loaded: 'student/loaded'
     })

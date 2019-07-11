@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Login',
@@ -52,9 +52,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      authenticate: 'user/authenticated',
-      user: 'user/user'
+    ...mapState({
+      current_user: state => state.user.user
     })
   },
   methods: {
@@ -68,7 +67,7 @@ export default {
           this.$notify({
             group: 'auth',
             title: 'Logged In',
-            text: 'Signed in as ' + this.user.email
+            text: 'Signed in as ' + this.current_user.email
           })
           this.$router.push({
             name: 'courses'

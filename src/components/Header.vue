@@ -4,7 +4,7 @@
     <li><router-link :to="{name: 'home'}">Home</router-link></li>
     <li v-if="authenticated"><router-link :to="{name: 'students'}">Students</router-link></li>
     <li v-if="authenticated"><router-link :to="{name: 'assignments'}">Assignments</router-link></li>
-    <li v-if="authenticated && user && user.role == 'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></li>
+    <li v-if="authenticated && current_user && current_user.role == 'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></li>
     <li><router-link :to="{name: 'about'}">About</router-link></li>
     <div id="authLinks">
       <li v-if="!authenticated"><router-link :to="{name: 'login'}">Log In</router-link></li>
@@ -13,14 +13,14 @@
   </ul>
 </template>
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
   name: 'VCHeader',
   computed: {
-    ...mapGetters({
-      authenticated: 'user/authenticated',
-      user: 'user/user'
+    ...mapState({
+      current_user: state => state.user.user,
+      authenticated: state => state.user.authenticated
     })
   },
   methods: {

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
 export default {
   name: 'Settings',
   data () {
@@ -68,8 +68,10 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      authenticated: state => state.user.authenticated
+    }),
     ...mapGetters({
-      authenticated: 'user/authenticated',
       remote_settings: 'settings/settings'
     })
   },
