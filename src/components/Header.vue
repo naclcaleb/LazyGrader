@@ -8,7 +8,7 @@
     <li><router-link :to="{name: 'about'}">About</router-link></li>
     <div id="authLinks">
       <li v-if="!authenticated"><router-link :to="{name: 'login'}">Log In</router-link></li>
-      <li v-if="authenticated"><router-link :to="{name: 'home'}" v-on:click="signOut">Log Out</router-link></li>
+      <li v-if="authenticated"><a @click.prevent="handleSignOut">Log Out</a></li>
     </div>
   </ul>
 </template>
@@ -26,7 +26,21 @@ export default {
   methods: {
     ...mapActions({
       signOut: 'user/sign_out'
-    })
+    }),
+
+    handleSignOut: function () {
+      console.log('Signing out')
+      this.signOut()
+        .then(response => {
+          console.log('Signed out: ', response)
+        })
+        .catch(error => {
+          console.log('Error while signing out: ', error)
+        })
+        .finally(() => {
+          this.$router.push({name: 'home'})
+        })
+    }
   }
 }
 </script>
