@@ -1,66 +1,67 @@
 <template>
   <div id="edit">
     <h1>Edit Assignment</h1>
-    <div v-if="local_assignment == null">Loading...</div>
-    <div v-else id="edit-form">
-      <table>
-        <tr>
+      <div id="edit-form">
+        <table>
+          <tr>
+            <td>
+              <label for="assignment-name"><b>Name: </b></label>
+              <br>
+              <input type="text" id="assignment-name" :placeholder="local_assignment.name" v-model="local_assignment.name" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="github-link"><b>GitHub Classroom Link: </b></label>
+              <br>
+              <input type="text" id="github-link" :placeholder="local_assignment.invitation_url" v-model="local_assignment.invitation_url" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="due-date"><b>Due Date: </b></label>
+              <br>
+              <input type="datetime-local" id="due-date" :placeholder="local_assignment.due_date" v-model="local_assignment.due_date" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="open-date"><b>Open Date: </b></label>
+              <br>
+              <input type="datetime-local" id="open-date" :placeholder="local_assignment.open_date" v-model="local_assignment.open_date" required>
+            </td>
+          </tr>
+          <tr>
           <td>
-            <label for="assignment-name"><b>Name: </b></label>
+            <label for="close-date"><b>Close Date: </b></label>
             <br>
-            <input type="text" id="assignment-name" :placeholder="local_assignment.name" v-model="local_assignment.name" required>
+            <input type="datetime-local" id="close-date" :placeholder="local_assignment.close_date" v-model="local_assignment.close_date" required>
           </td>
         </tr>
-        <tr>
-          <td>
-            <label for="github-link"><b>GitHub Classroom Link: </b></label>
-            <br>
-            <input type="text" id="github-link" :placeholder="local_assignment.invitation_url" v-model="local_assignment.invitation_url" required>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="due-date"><b>Due Date: </b></label>
-            <br>
-            <input type="datetime-local" id="due-date" :placeholder="local_assignment.due_date" v-model="local_assignment.due_date" required>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="open-date"><b>Open Date: </b></label>
-            <br>
-            <input type="datetime-local" id="open-date" :placeholder="local_assignment.open_date" v-model="local_assignment.open_date" required>
-          </td>
-        </tr>
-        <tr>
-        <td>
-          <label for="close-date"><b>Close Date: </b></label>
-          <br>
-          <input type="datetime-local" id="close-date" :placeholder="local_assignment.close_date" v-model="local_assignment.close_date" required>
-        </td>
-      </tr>
-        <tr>
-          <td>
-            <label for="close-date"><b>Canvas ID: </b></label>
-            <br>
-            <input type="number" id="canvas-id" :placeholder="local_assignment.canvas_id" v-model="local_assignment.canvas_id" required>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" id="submit" v-on:click="handleSubmit">
-            <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
-          </td>
-        </tr>
-      </table>
-    </div>
+          <tr>
+            <td>
+              <label for="close-date"><b>Canvas ID: </b></label>
+              <br>
+              <input type="number" id="canvas-id" :placeholder="local_assignment.canvas_id" v-model="local_assignment.canvas_id" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" id="submit" v-on:click="handleSubmit">
+              <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
+            </td>
+          </tr>
+        </table>
+      </div>
   </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import AuthorizedAdminDiv from '../components/AuthorizedAdminDiv'
 export default {
   name: 'AssignmentForm',
+  components: {AuthorizedAdminDiv},
   data () {
     return {
       local_assignment: null

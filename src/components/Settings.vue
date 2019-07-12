@@ -1,60 +1,62 @@
 <template>
   <div id="settings">
     <h1>Settings</h1>
-    <form @submit.prevent="handleSubmit"  v-if="loaded && authenticated">
-      <table>
-        <tr>
-          <td>
-            <label for="siteTitle"><b>Website Title</b></label>
-            <br>
-            <input type="text" id="siteTitle" :placeholder="remote_settings.title" v-model="local_settings.title"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="collegeName"><b>College Name</b></label>
-            <br>
-            <input type="text" id="collegeName" :placeholder="remote_settings.college_name" v-model="local_settings.college_name"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="canvasUrl"><b>Canvas URL</b></label>
-            <br>
-            <input type="text" id="canvasUrl" :placeholder="remote_settings.canvas_url" v-model="local_settings.canvas_url"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="jenkinsUrl"><b>Jenkins URL</b></label>
-            <br>
-            <input type="text" id="jenkinsUrl" :placeholder="remote_settings.jenkins_url" v-model="local_settings.jenkins_url"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for = "secrets"><b>Upload Secrets</b></label>
-            <br>
-            <textarea v-model="local_settings.secrets" id="secrets"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" id="submit">
-            <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
-          </td>
-        </tr>
-      </table>
-    </form>
-    <div v-else-if="authenticated">Loading</div>
-    <div v-else>Error. Unauthorized user.</div>
+      <AuthorizedAdminDiv v-bind:loaded="loaded" v-bind:authenticated="authenticated" v-bind:role="role" :hide-only="false">
+        <form @submit.prevent="handleSubmit">
+          <table>
+            <tr>
+              <td>
+                <label for="siteTitle"><b>Website Title</b></label>
+                <br>
+                <input type="text" id="siteTitle" :placeholder="remote_settings.title" v-model="local_settings.title"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="collegeName"><b>College Name</b></label>
+                <br>
+                <input type="text" id="collegeName" :placeholder="remote_settings.college_name" v-model="local_settings.college_name"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="canvasUrl"><b>Canvas URL</b></label>
+                <br>
+                <input type="text" id="canvasUrl" :placeholder="remote_settings.canvas_url" v-model="local_settings.canvas_url"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="jenkinsUrl"><b>Jenkins URL</b></label>
+                <br>
+                <input type="text" id="jenkinsUrl" :placeholder="remote_settings.jenkins_url" v-model="local_settings.jenkins_url"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for = "secrets"><b>Upload Secrets</b></label>
+                <br>
+                <textarea v-model="local_settings.secrets" id="secrets"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" id="submit">
+                <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
+              </td>
+            </tr>
+          </table>
+        </form>
+      </AuthorizedAdminDiv>
   </div>
 </template>
 
 <script>
 import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
+import AuthorizedAdminDiv from './components/AuthorizedAdminDiv'
 export default {
   name: 'Settings',
+  components: {AuthorizedAdminDiv},
   data () {
     return {
       local_settings: {
@@ -69,7 +71,8 @@ export default {
   },
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated
+      authenticated: state => state.user.authenticated,
+      role: state => state.user.user.role
     }),
     ...mapGetters({
       remote_settings: 'settings/settings'

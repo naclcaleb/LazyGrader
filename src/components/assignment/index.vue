@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>Assignments</h1>
-    <div v-if="loading && authenticated">Loading...</div>
-    <div v-else-if="!authenticated">Error. Unauthorized user.</div>
-    <div v-else>
+    <AuthorizedStudentDiv :loaded="courses_loaded" :authenticated="authenticated" :role="role">
       <div v-for="course in courses" :key="course.id">
         <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
         <div class="assignments-table">
@@ -20,15 +18,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </AuthorizedStudentDiv>
   </div>
 </template>
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
+import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
 
 export default {
   name: 'Assignment',
+  components: {AuthorizedStudentDiv},
   data () {
     return {
       loading: true
@@ -37,7 +37,8 @@ export default {
 
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated
+      authenticated: state => state.user.authenticated,
+      role: state => state.user.user.role
     }),
     ...mapGetters({
       courses: 'course/collection',

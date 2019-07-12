@@ -1,37 +1,40 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <div v-if="students == null && authenticated" class="loading">Loading...</div>
-    <div v-else-if="!authenticated">Error. Unauthorized user.</div>
-    <div v-else class="students-table">
-      <div class="student-row">
-        <div class="student-name header">Name</div>
-        <div class="student-email header">Email</div>
-        <div class="student-student_id header">Student ID</div>
-        <div class="student-slack_id header">Slack ID</div>
-        <div class="student-github_username header">Github ID</div>
-        <div class="student-canvas_id header">Canvas ID</div>
+    <AuthorizedStudentDiv :loaded="students_loaded" :authenticated="authenticated" :role="role">
+      <div class="students-table">
+        <div class="student-row">
+          <div class="student-name header">Name</div>
+          <div class="student-email header">Email</div>
+          <div class="student-student_id header">Student ID</div>
+          <div class="student-slack_id header">Slack ID</div>
+          <div class="student-github_username header">Github ID</div>
+          <div class="student-canvas_id header">Canvas ID</div>
+        </div>
+        <student-row v-for="student in students" :student="student" :key="student.id" />
       </div>
-      <student-row v-for="student in students" :student="student" :key="student.id" />
-    </div>
+    </AuthorizedStudentDiv>
   </div>
 </template>
 
 <script>
 import {mapState, mapGetters, mapActions} from 'vuex'
 import StudentRow from './StudentRow'
+import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
 
 export default {
   name: 'Students',
-  components: {StudentRow},
+  components: {StudentRow, AuthorizedStudentDiv},
   data () {
     return {
-      title: 'Ventura College Students'
+      title: 'Ventura College Students',
+      loaded: false
     }
   },
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated
+      authenticated: state => state.user.authenticated,
+      role: state => state.user.user.role
     }),
     ...mapGetters({
       students: 'student/collection',
@@ -47,6 +50,7 @@ export default {
     if (!this.students_loaded) {
       this.fetch()
         .then(response => {
+          this.loaded = true
           console.log('Loaded')
         })
     }
