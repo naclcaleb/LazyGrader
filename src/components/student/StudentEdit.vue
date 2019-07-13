@@ -6,7 +6,7 @@
 
 <script>
 import StudentForm from './StudentForm'
-import lazy from '../../lib/vclazygrader'
+import {mapGetters} from 'vuex'
 export default {
   name: 'StudentEdit',
   components: {StudentForm},
@@ -15,10 +15,13 @@ export default {
       student: null
     }
   },
+  computed: {
+    ...mapGetters({
+      findStudent: 'student/find'
+    })
+  },
   mounted () {
-    lazy.get_student(this.$route.params.id, {success: function (response) {
-      this.student = response.data
-    }.bind(this)})
+    this.student = this.findStudent(this.$route.params.id)
   }
 }
 </script>

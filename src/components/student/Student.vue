@@ -40,11 +40,10 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
 import StudentCourses from './StudentCourses'
 import VCFooter from '../Footer'
 import CopyButton from '../components/CopyButton'
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Student',
@@ -56,14 +55,17 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      studentLoaded: state => state.student.loaded
+    }),
     ...mapGetters({
-      studentInfo: 'student/find',
-      studentLoaded: 'student/loaded'
+      studentInfo: 'student/find'
     })
   },
   methods: {
     ...mapActions({
-      fetch: 'student/fetch'
+      fetch_courses: 'student/fetch',
+      coursesFor: 'course/fetch_courses_for'
     }),
     update: function () {
       this.student = this.studentInfo(this.$route.params.id)
@@ -72,7 +74,7 @@ export default {
   },
   mounted () {
     if (!this.studentLoaded) {
-      this.fetch()
+      this.fetch_courses()
         .then(response => {
           this.update()
         })
@@ -80,10 +82,13 @@ export default {
       this.update()
     }
 
-    let context = this
-    lazy.get_courses_for(this.$route.params.id, {success: function (response) {
-      context.courses = response.data
-    }})
+    this.coursesFor(this.$route.params.id)
+      .then(response => {
+        this.courses = response.data
+      })
+      .catch(error => {
+        console.log('Unable to fetch courses for student id: ' + this.$route.params.id + ': ', error)
+      })
   }
 }
 </script>

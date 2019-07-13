@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {mapGetters, mapState, mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
 
 export default {
@@ -38,11 +38,9 @@ export default {
   computed: {
     ...mapState({
       authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role
-    }),
-    ...mapGetters({
-      courses: 'course/collection',
-      courses_loaded: 'course/loaded'
+      role: state => state.user.user.role,
+      courses: state => state.course.collection,
+      courses_loaded: state => state.course.loaded
     })
   },
   methods: {

@@ -75,7 +75,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions({fetch: 'course/fetch'}),
+    ...mapActions({fetch_courses: 'course/fetch'}),
     update: function () {
       this.course = this.courseInfo(this.$route.params.id)
       this.loading = false
@@ -85,7 +85,7 @@ export default {
     if (this.loaded) {
       this.update()
     } else {
-      this.fetch()
+      this.fetch_courses()
         .then(response => {
           this.update()
         })

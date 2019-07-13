@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import StudentRow from './StudentRow'
 import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
 
@@ -34,21 +34,19 @@ export default {
   computed: {
     ...mapState({
       authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role
-    }),
-    ...mapGetters({
-      students: 'student/collection',
-      students_loaded: 'student/loaded'
+      role: state => state.user.user.role,
+      students: state => state.student.collection,
+      students_loaded: state => state.student.loaded
     })
   },
   methods: {
     ...mapActions({
-      fetch: 'student/fetch'
+      fetch_courses: 'student/fetch'
     })
   },
   mounted () {
     if (!this.students_loaded) {
-      this.fetch()
+      this.fetch_courses()
         .then(response => {
           this.loaded = true
           console.log('Loaded')

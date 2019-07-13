@@ -14,7 +14,7 @@
 
 <script>
 import CourseRow from './CourseRow'
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Courses',
@@ -25,11 +25,13 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      college_name: state => state.settings.settings.college_name,
+      courses: state => state.course.collection,
+      courses_loaded: state => state.course.loaded
+    }),
     ...mapGetters({
-      courses: 'course/collection',
-      courses_loaded: 'course/loaded',
-      find: 'course/find',
-      college_name: 'settings/college_name'
+      find: 'course/find'
     }),
     title: function () {
       return this.college_name + ' Courses'
@@ -37,20 +39,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetch: 'course/fetch',
-      fetch_settings: 'settings/fetch'
+      fetch_courses: 'course/fetch'
     })
   },
   mounted () {
-    this.fetch().then(response => {
-      this.fetch_settings().then(response => {
-        this.loading = false
-      })
-    })
     if (this.courses_loaded) {
       this.loading = false
     } else {
-      this.fetch().then(response => {
+      this.fetch_courses().then(response => {
         this.loading = false
       })
     }

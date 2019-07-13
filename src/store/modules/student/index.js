@@ -44,6 +44,17 @@ export default {
           return Promise.resolve(response)
         })
     },
+
+    get_assignment_status: function (context, [studentId, assignmentId]) {
+      return Vue.axios.get(lazy.url(`students/${studentId}/status/${assignmentId}`))
+        .then(response => {
+          return Promise.resolve(response)
+        })
+        .catch(error => {
+          return Promise.reject(error)
+        })
+    },
+
     upload: function (context, data) {
       return Vue.axios.put(lazy.url(`students/${data.id}`), data)
         .then(response => {

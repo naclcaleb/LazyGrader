@@ -21,11 +21,11 @@ export default {
   computed: {
     ...mapState({
       authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role
+      role: state => state.user.user.role,
+      loaded: state => state.assignment.loaded
     }),
     ...mapGetters({
-      assignmentInfo: 'assignment/find',
-      loaded: 'assignment/loaded'
+      assignmentInfo: 'assignment/find'
     })
   },
   methods: {

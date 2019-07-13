@@ -60,18 +60,18 @@ export default {
   computed: {
     ...mapState({
       authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role
+      role: state => state.user.user.role,
+      loaded: state => state.assignment.loaded
     }),
     ...mapGetters({
-      assignmentInfo: 'assignment/find',
-      loaded: 'assignment/loaded'
+      assignmentInfo: 'assignment/find'
     }),
     canvas_url: function () {
       return `https://vcccd.instructure.com/courses/${this.assignment.course.canvas_id}/assignments/${this.assignment.canvas_id}`
     }
   },
   methods: {
-    ...mapActions({fetch: 'assignment/fetch'}),
+    ...mapActions({fetch_courses: 'assignment/fetch'}),
     update: function () {
       this.assignment = this.assignmentInfo(this.$route.params.id)
       this.loading = false
@@ -81,7 +81,7 @@ export default {
     if (this.loaded) {
       this.update()
     } else {
-      this.fetch()
+      this.fetch_courses()
         .then(response => {
           this.update()
         })

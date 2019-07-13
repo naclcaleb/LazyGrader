@@ -16,24 +16,39 @@
 import store from './store'
 import VCFooter from './components/Footer'
 import VCHeader from './components/Header'
-import {mapActions, mapGetters} from 'vuex'
+import {mapState, mapActions, mapMutations} from 'vuex'
 
 export default {
   name: 'App',
   components: {VCHeader, VCFooter},
   methods: {
     ...mapActions({
-      fetch: 'settings/fetch'
+      fetch_courses: 'settings/fetch'
+    }),
+    ...mapMutations({
+      token: 'user/token',
+      client: 'user/client',
+      uid: 'user/uid',
+      user: 'user/user',
+      authenticated: 'user/authenticated'
     })
   },
   computed: {
-    ...mapGetters({
-      title: 'settings/title'
+    ...mapState({
+      title: state => state.settings.settings.title
     })
   },
   created () {
     this.$store.initializeModules()
-    this.fetch().then(response => {
+    if (localStorage.getItem('user') !== null) {
+      this.token(localStorage.getItem('token'))
+      this.client(localStorage.getItem('client'))
+      this.uid(localStorage.getItem('uid'))
+      this.user(JSON.parse(localStorage.getItem(('user'))))
+      this.authenticated(true)
+    }
+    this.fetch_courses().then(response => {
+      console.log(this.title)
       document.title = this.title
     })
   },

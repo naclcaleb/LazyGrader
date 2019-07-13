@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
+import {mapActions} from 'vuex'
 import StudentAssignmentRow from './StudentAssignmentRow'
 
 export default {
@@ -23,11 +23,19 @@ export default {
     course: Object,
     student: Object
   },
+  methods: {
+    ...mapActions({
+      get_assignments_for_course: 'assignment/get_assignments_for_course'
+    })
+  },
   mounted () {
-    var context = this
-    lazy.get_assignments_for_course(this.course.id, {success: function (response) {
-      context.assignments = response.data
-    }})
+    this.get_assignments_for_course(this.course.id)
+      .then(response => {
+        this.assignments = response.data
+      })
+      .catch(error => {
+        console.log('Unable to get assignments for course: ', error)
+      })
   }
 }
 </script>

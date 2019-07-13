@@ -44,10 +44,21 @@ export default {
           return Promise.resolve(response)
         })
     },
+
     upload: function (context, data) {
       return Vue.axios.put(lazy.url(`assignments/${data.id}`), data)
         .then(response => {
           return Promise.resolve(response)
+        })
+    },
+
+    get_assignments_for_course: function (context, courseId) {
+      return Vue.axios.get(lazy.url(`/assignments/for/${courseId}`))
+        .then(response => {
+          return Promise.resolve(response)
+        })
+        .catch(error => {
+          return Promise.reject(error)
         })
     }
   }

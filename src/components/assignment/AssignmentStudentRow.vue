@@ -18,8 +18,7 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 import StartButton from '../components/StartButton'
 import BuildButton from '../components/BuildButton'
 import GradeButton from '../components/GradeButton'
@@ -41,6 +40,9 @@ export default {
     student_id: Number
   },
   computed: {
+    ...mapState({
+
+    }),
     ...mapGetters({
       studentInfo: 'student/find',
       loaded: 'student/loaded'
@@ -48,7 +50,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetch: 'student/fetch'
+      fetch_courses: 'student/fetch',
+      get_assignment_status: 'student/get_assignment_status'
     }),
     update: function () {
       this.student = this.studentInfo(this.student_id)
@@ -59,23 +62,23 @@ export default {
     if (this.loaded) {
       this.update()
     } else {
-      this.fetch()
+      this.fetch_courses()
         .then(response => {
           this.update()
         })
     }
-    lazy.get_assignment_status(this.student_id, this.assignment.id)
-      .then(function (response) {
+    this.get_assignment_status([this.student_id, this.assignment.id])
+      .then(response => {
         this.color = response.data.color
         this.build_status_url = response.data.build_url
         this.grade_value = response.data.grade
         if (response.data.error !== 'Not Found' && response.status === 200) {
           this.show_buttons = true
         }
-      }.bind(this))
-      .catch(function (response) {
+      })
+      .catch(response => {
         this.starting = true
-      }.bind(this))
+      })
   }
 }
 </script>

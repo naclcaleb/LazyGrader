@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
+import {mapActions} from 'vuex'
 import BuildButton from '../components/BuildButton'
 import GradeButton from '../components/GradeButton'
 import StartButton from '../components/StartButton'
@@ -46,8 +46,13 @@ export default {
     assignment: Object,
     student: Object
   },
+  methods: {
+    ...mapActions({
+      get_assignment_status: 'student/get_assignment_status'
+    })
+  },
   mounted () {
-    lazy.get_assignment_status(this.student.id, this.assignment.id)
+    this.get_assignment_status([this.student.id, this.assignment.id])
       .then(function (response) {
         this.color = response.data.color
         this.build_status_url = response.data.build_url
@@ -55,10 +60,11 @@ export default {
         if (response.data.error !== 'Not Found' && response.status === 200) {
           this.show_buttons = true
         }
-      }.bind(this))
+      })
       .catch(function (response) {
+        console.log('Unable to get assignment status: ', response)
         this.starting = true
-      }.bind(this))
+      })
   }
 }
 </script>

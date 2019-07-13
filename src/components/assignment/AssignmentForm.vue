@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 import AuthorizedAdminDiv from '../components/AuthorizedAdminDiv'
 export default {
   name: 'AssignmentForm',
@@ -68,9 +68,11 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      loaded: state => state.assignment.loaded
+    }),
     ...mapGetters({
-      assignmentInfo: 'assignment/find',
-      loaded: 'assignment/loaded'
+      assignmentInfo: 'assignment/find'
     })
   },
   methods: {
@@ -103,7 +105,9 @@ export default {
     },
     cancelSubmit: function () {
       this.fetch()
-      this.update()
+        .then(response => {
+          this.update()
+        })
       this.$router.push({name: 'assignment', params: {id: this.local_assignment.id}})
       this.$notify({
         group: 'edit',

@@ -44,8 +44,7 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'StudentForm',
   data () {
@@ -55,12 +54,12 @@ export default {
     }
   },
   computed: {
-
+    ...mapGetters({
+      findStudent: 'student/find'
+    })
   },
   mounted () {
-    lazy.get_student(this.$route.params.id, {success: function (response) {
-      this.local_student = response.data
-    }.bind(this)})
+    this.local_student = this.findStudent(this.$route.params.id)
   },
   methods: {
     ...mapActions({upload: 'student/upload'}),

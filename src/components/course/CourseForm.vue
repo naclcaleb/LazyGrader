@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import lazy from '../../lib/vclazygrader'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'CourseForm',
   data () {
     return {
-      course_infos: null,
+      course_infos: [],
       selected: 0
     }
   },
@@ -59,13 +59,15 @@ export default {
   },
   mounted () {
     this.selected = this.course.course_info_id
-    lazy.get_course_infos({
-      success: function (response) {
+    this.fetch_course_infos()
+      .then(response => {
         this.course_infos = response.data
-      }.bind(this)
-    })
+      })
   },
   methods: {
+    ...mapActions({
+      fetch_course_infos: 'course/fetch_course_infos'
+    }),
     handleSubmit: function () {
       this.course.course_info_id = this.selected
       console.log('submit: ', this.course)

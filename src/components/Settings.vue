@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
+import {mapActions, mapState, mapMutations} from 'vuex'
 import AuthorizedAdminDiv from './components/AuthorizedAdminDiv'
 export default {
   name: 'Settings',
@@ -72,15 +72,13 @@ export default {
   computed: {
     ...mapState({
       authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role
-    }),
-    ...mapGetters({
-      remote_settings: 'settings/settings'
+      role: state => state.user.user.role,
+      remote_settings: state => state.settings.settings
     })
   },
   methods: {
     ...mapActions({
-      fetch: 'settings/fetch',
+      fetch_courses: 'settings/fetch',
       upload: 'settings/upload'
     }),
 
@@ -123,7 +121,7 @@ export default {
     }
   },
   mounted () {
-    this.fetch().then(response => {
+    this.fetch_courses().then(response => {
       console.log(response)
       this.loaded = true
     })

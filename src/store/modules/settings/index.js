@@ -8,32 +8,6 @@ export default {
     loaded: false
   },
 
-  getters: {
-    settings: state => {
-      return state.settings
-    },
-
-    title: state => {
-      return state.settings.title
-    },
-
-    college_name: state => {
-      return state.settings.college_name
-    },
-
-    canvas_url: state => {
-      return state.settings.canvas_url
-    },
-
-    jenkins_url: state => {
-      return state.settings.jenkins_url
-    },
-
-    loaded: state => {
-      return state.loaded
-    }
-  },
-
   mutations: {
     settings: function (state, data) {
       state.settings = data
@@ -61,7 +35,6 @@ export default {
     },
 
     upload: function (context, data) {
-      console.log('data: ', data)
       return Vue.axios.post(lazy.url('settings/upload'), data)
         .then(response => {
           return Promise.resolve(response)

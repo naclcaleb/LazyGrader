@@ -64,6 +64,10 @@ export default {
           context.commit('client', response.headers.client)
           context.commit('uid', response.headers.uid)
           context.commit('user', response.data.data)
+          localStorage.setItem('user', JSON.stringify(response.data.data))
+          localStorage.setItem('token', response.headers['access-token'])
+          localStorage.setItem('uid', response.headers.uid)
+          localStorage.setItem('client', response.headers.client)
           return Promise.resolve(response)
         })
         .catch(error => {
@@ -79,6 +83,14 @@ export default {
       }})
         .then(response => {
           commit('authenticated', false)
+          commit('token', response.headers['access-token'])
+          commit('client', response.headers.client)
+          commit('uid', response.headers.uid)
+          commit('user', null)
+          localStorage.removeItem('user')
+          localStorage.removeItem('token')
+          localStorage.removeItem('uid')
+          localStorage.removeItem('client')
           return Promise.resolve(response)
         })
         .catch(error => {

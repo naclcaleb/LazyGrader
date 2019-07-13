@@ -8,7 +8,7 @@
 
 <script>
 import CourseForm from './CourseForm'
-import lazy from '../../lib/vclazygrader'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'CourseEdit',
@@ -18,10 +18,19 @@ export default {
       course: null
     }
   },
+  computed: {
+    ...mapGetters({
+      find_course: 'course/find'
+    })
+  },
+  methods: {
+    update: function () {
+      this.course = this.find_course(this.$route.params.id)
+      console.log('Course: ', this.course)
+    }
+  },
   mounted () {
-    lazy.get_course(this.$route.params.id, {success: function (response) {
-      this.course = response.data
-    }.bind(this)})
+    this.update()
   }
 }
 </script>
