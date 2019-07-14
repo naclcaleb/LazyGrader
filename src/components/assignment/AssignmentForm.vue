@@ -58,10 +58,9 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
-import AuthorizedAdminDiv from '../components/AuthorizedAdminDiv'
+
 export default {
   name: 'AssignmentForm',
-  components: {AuthorizedAdminDiv},
   data () {
     return {
       local_assignment: null

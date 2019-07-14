@@ -30,9 +30,9 @@
         <copy-button :copyText="assignment.canvas_id"></copy-button>
       </tr>
     </table>
-    <AuthorizedAdminDiv class="edit-link" :authenticated="authenticated" :loaded="loaded" :role="role" :hide-only="true">
+    <authorized-div class="edit-link" :authenticated="authenticated" :loaded="loaded" :role="role" :hide-only="true">
       <router-link :to="{name: 'assignment-edit', params: { id: assignment.id}}" tag="button">Edit</router-link>
-    </AuthorizedAdminDiv>
+    </authorized-div>
       <div>
       <h2>Students</h2>
       <div class="students-table">
@@ -46,11 +46,11 @@
 import {mapGetters, mapActions, mapState} from 'vuex'
 import AssignmentStudentRow from './AssignmentStudentRow'
 import CopyButton from '../components/CopyButton'
-import AuthorizedAdminDiv from '../components/AuthorizedAdminDiv'
+import AuthorizedDiv from '../components/AuthorizedDiv'
 
 export default {
   name: 'Assignment',
-  components: {CopyButton, AssignmentStudentRow, AuthorizedAdminDiv},
+  components: {AuthorizedDiv, CopyButton, AssignmentStudentRow},
   data () {
     return {
       assignment: null,

@@ -2,21 +2,24 @@
   <ul id="navbar">
     <li class="logo"><a href="https://www.venturacollege.edu/" target="_blank"><img src="../assets/VC-logo.png" alt=""/></a></li>
     <li><router-link :to="{name: 'home'}">Home</router-link></li>
-    <li v-if="authenticated"><router-link :to="{name: 'students'}">Students</router-link></li>
-    <li v-if="authenticated"><router-link :to="{name: 'assignments'}">Assignments</router-link></li>
-    <li v-if="authenticated && current_user && current_user.role == 'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></li>
+    <authenticated-item><router-link :to="{name: 'students'}">Students</router-link></authenticated-item>
+    <authenticated-item><router-link :to="{name: 'assignments'}">Assignments</router-link></authenticated-item>
+    <authorized-item :role="'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></authorized-item>
     <li><router-link :to="{name: 'about'}">About</router-link></li>
     <div id="authLinks">
       <li v-if="!authenticated"><router-link :to="{name: 'login'}">Log In</router-link></li>
-      <li v-if="authenticated"><a @click.prevent="handleSignOut">Log Out</a></li>
+      <authenticated-item><a @click.prevent="handleSignOut">Log Out</a></authenticated-item>
     </div>
   </ul>
 </template>
 <script>
 import {mapActions, mapState} from 'vuex'
+import AuthenticatedItem from './components/AuthenticatedItem'
+import AuthorizedItem from './components/AuthorizedItem'
 
 export default {
   name: 'VCHeader',
+  components: {AuthorizedItem, AuthenticatedItem},
   computed: {
     ...mapState({
       current_user: state => state.user.user,

@@ -1,7 +1,7 @@
 <template>
   <div id="settings">
     <h1>Settings</h1>
-      <AuthorizedAdminDiv v-bind:loaded="loaded" v-bind:authenticated="authenticated" v-bind:role="role" :hide-only="false">
+      <authorized-div :role="'admin'">
         <form @submit.prevent="handleSubmit">
           <table>
             <tr>
@@ -47,16 +47,17 @@
             </tr>
           </table>
         </form>
-      </AuthorizedAdminDiv>
+      </authorized-div>
   </div>
 </template>
 
 <script>
 import {mapActions, mapState, mapMutations} from 'vuex'
-import AuthorizedAdminDiv from './components/AuthorizedAdminDiv'
+import AuthorizedDiv from './components/AuthorizedDiv'
+
 export default {
   name: 'Settings',
-  components: {AuthorizedAdminDiv},
+  components: {AuthorizedDiv},
   data () {
     return {
       local_settings: {

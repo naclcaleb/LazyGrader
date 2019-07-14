@@ -1,18 +1,19 @@
 <template>
   <div>
-    <AuthorizedAdminDiv :loaded="loaded" :authenticated="authenticated" :role="role" :hide-only="false">
+    <authorized-div :role="'admin'">
       <AssignmentForm v-bind:assignment="assignment"></AssignmentForm>
-    </AuthorizedAdminDiv>
+    </authorized-div>
   </div>
 </template>
 
 <script>
 import AssignmentForm from './AssignmentForm'
+import AuthorizedDiv from '../components/AuthorizedDiv'
 import {mapGetters, mapActions, mapState} from 'vuex'
-import AuthorizedAdminDiv from '../components/AuthorizedAdminDiv'
+
 export default {
   name: 'AssignmentEdit',
-  components: {AssignmentForm, AuthorizedAdminDiv},
+  components: {AuthorizedDiv, AssignmentForm},
   data () {
     return {
       assignment: null

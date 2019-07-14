@@ -1,34 +1,32 @@
 <template>
   <div>
     <h1>Assignments</h1>
-    <AuthorizedStudentDiv :loaded="courses_loaded" :authenticated="authenticated" :role="role">
-      <div v-for="course in courses" :key="course.id">
-        <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
-        <div class="assignments-table">
-          <div class="assignment-row" v-for="assignment in course.assignments" :key="assignment.id">
-            <div class="assignment-name">
-              <router-link :to="{name: 'assignment', params: {id: assignment.id}}">{{assignment.name}}</router-link>
-            </div>
-            <div class="assignment-due_date">
-              {{assignment.due_date | formatDate}}
-            </div>
-            <div class="assignment-invitation">
-              <a :href="assignment.invitation_url">GitHub Classroom</a>
-            </div>
+    <div v-for="course in courses" :key="course.id">
+      <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
+      <div class="assignments-table">
+        <div class="assignment-row" v-for="assignment in course.assignments" :key="assignment.id">
+          <div class="assignment-name">
+            <router-link :to="{name: 'assignment', params: {id: assignment.id}}">{{assignment.name}}</router-link>
+          </div>
+          <div class="assignment-due_date">
+            {{assignment.due_date | formatDate}}
+          </div>
+          <div class="assignment-invitation">
+            <a :href="assignment.invitation_url">GitHub Classroom</a>
           </div>
         </div>
       </div>
-    </AuthorizedStudentDiv>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
+import AuthorizedDiv from '../components/AuthorizedDiv'
 
 export default {
   name: 'Assignment',
-  components: {AuthorizedStudentDiv},
+  components: {AuthorizedDiv},
   data () {
     return {
       loading: true

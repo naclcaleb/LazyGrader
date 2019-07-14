@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <AuthorizedStudentDiv :loaded="students_loaded" :authenticated="authenticated" :role="role">
+    <authenticated-div>
       <div class="students-table">
         <div class="student-row">
           <div class="student-name header">Name</div>
@@ -13,18 +13,18 @@
         </div>
         <student-row v-for="student in students" :student="student" :key="student.id" />
       </div>
-    </AuthorizedStudentDiv>
+    </authenticated-div>
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
 import StudentRow from './StudentRow'
-import AuthorizedStudentDiv from '../components/AuthorizedStudentDiv'
+import AuthenticatedDiv from '../components/AuthenticatedDiv'
 
 export default {
   name: 'Students',
-  components: {StudentRow, AuthorizedStudentDiv},
+  components: {AuthenticatedDiv, StudentRow},
   data () {
     return {
       title: 'Ventura College Students',
