@@ -2,6 +2,14 @@ import Vue from 'vue'
 import lazy from '../../../lib/vclazygrader'
 import _ from 'lodash'
 
+const defaultValues = () => {
+  return {
+    collection: [],
+    course_infos: [],
+    loaded: false
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -37,6 +45,10 @@ export default {
 
     loaded: function (state, data) {
       state.loaded = data
+    },
+
+    reset: function (state) {
+      Object.assign(state, defaultValues())
     }
   },
 

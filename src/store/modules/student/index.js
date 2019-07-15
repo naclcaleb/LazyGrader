@@ -2,6 +2,13 @@ import Vue from 'vue'
 import lazy from '../../../lib/vclazygrader'
 import _ from 'lodash'
 
+const defaultValues = () => {
+  return {
+    collection: [],
+    loaded: false
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -32,13 +39,17 @@ export default {
 
     loaded: function (state, data) {
       state.loaded = data
+    },
+
+    reset: function (state) {
+      Object.assign(state, defaultValues())
     }
   },
 
   actions: {
     fetch: function (context, data) {
       context.commit('loaded', false)
-      return Vue.axios.get(lazy.url('students'))
+      return Vue.axios.get(lazy.url('students'), {headers: this.getters['user/headers']})
         .then(response => {
           context.commit('collection', response.data)
           return Promise.resolve(response)
@@ -46,7 +57,7 @@ export default {
     },
 
     get_assignment_status: function (context, [studentId, assignmentId]) {
-      return Vue.axios.get(lazy.url(`students/${studentId}/status/${assignmentId}`))
+      return Vue.axios.get(lazy.url(`students/${studentId}/status/${assignmentId}`), {headers: this.getters['user/headers']})
         .then(response => {
           return Promise.resolve(response)
         })
@@ -56,7 +67,7 @@ export default {
     },
 
     upload: function (context, data) {
-      return Vue.axios.put(lazy.url(`students/${data.id}`), data)
+      return Vue.axios.put(lazy.url(`students/${data.id}`), data, {headers: this.getters['user/headers']})
         .then(response => {
           return Promise.resolve(response)
         })

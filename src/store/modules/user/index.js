@@ -1,6 +1,16 @@
 import Vue from 'vue'
 import lazy from '../../../lib/vclazygrader'
 
+const defaultValues = () => {
+  return {
+    token: '',
+    client: '',
+    uid: '',
+    user: null,
+    authenticated: false
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -52,6 +62,10 @@ export default {
 
     user: function (state, user) {
       state.user = user
+    },
+
+    reset: function (state) {
+      Object.assign(state, defaultValues())
     }
   },
 
@@ -82,19 +96,19 @@ export default {
         'uid': state.uid
       }})
         .then(response => {
-          commit('authenticated', false)
-          commit('token', response.headers['access-token'])
-          commit('client', response.headers.client)
-          commit('uid', response.headers.uid)
-          commit('user', null)
-          localStorage.removeItem('user')
-          localStorage.removeItem('token')
-          localStorage.removeItem('uid')
-          localStorage.removeItem('client')
           return Promise.resolve(response)
         })
         .catch(error => {
           return Promise.reject(error)
+        })
+        .finally(() => {
+          localStorage.removeItem('user')
+          localStorage.removeItem('token')
+          localStorage.removeItem('uid')
+          localStorage.removeItem('client')
+          this.commit('student/reset')
+          this.commit('course/reset')
+          commit('reset')
         })
     }
   }
