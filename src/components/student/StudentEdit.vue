@@ -10,6 +10,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'StudentEdit',
   components: {StudentForm},
+  props: ['id'],
   data () {
     return {
       student: null
@@ -21,7 +22,7 @@ export default {
     })
   },
   mounted () {
-    this.student = this.findStudent(this.$route.params.id)
+    this.student = this.findStudent(this.id)
   }
 }
 </script>

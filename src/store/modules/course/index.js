@@ -55,7 +55,7 @@ export default {
   actions: {
     fetch: function (context, data) {
       context.commit('loaded', false)
-      return Vue.axios.get(lazy.url('courses'))
+      return Vue.axios.get(lazy.url('courses'), {headers: this.getters['user/headers']})
         .then(response => {
           context.commit('collection', response.data)
           context.commit('loaded', true)
@@ -64,7 +64,7 @@ export default {
     },
 
     fetch_courses_for: function (context, data) {
-      return Vue.axios.get(lazy.url(`courses/for/${data}`))
+      return Vue.axios.get(lazy.url(`courses/for/${data}`), {headers: this.getters['user/headers']})
         .then(response => {
           return Promise.resolve(response)
         })
@@ -74,7 +74,7 @@ export default {
     },
 
     fetch_course_infos: function (context, data) {
-      return Vue.axios.get(lazy.url('/course_infos'))
+      return Vue.axios.get(lazy.url('/course_infos'), {headers: this.getters['user/headers']})
         .then(response => {
           context.commit('course_infos', response.data)
           return Promise.resolve(response)

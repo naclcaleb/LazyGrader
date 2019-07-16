@@ -51,6 +51,7 @@ import AuthorizedDiv from '../components/AuthorizedDiv'
 export default {
   name: 'Assignment',
   components: {AuthorizedDiv, CopyButton, AssignmentStudentRow},
+  props: ['id'],
   data () {
     return {
       assignment: null,
@@ -73,7 +74,7 @@ export default {
   methods: {
     ...mapActions({fetch_courses: 'assignment/fetch'}),
     update: function () {
-      this.assignment = this.assignmentInfo(this.$route.params.id)
+      this.assignment = this.assignmentInfo(this.id)
       this.loading = false
     }
   },

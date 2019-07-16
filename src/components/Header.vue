@@ -14,8 +14,8 @@
 </template>
 <script>
 import {mapActions, mapState} from 'vuex'
-import AuthenticatedItem from './components/AuthenticatedItem'
-import AuthorizedItem from './components/AuthorizedItem'
+import AuthenticatedItem from './components/AuthenticatedList'
+import AuthorizedItem from './components/AuthorizedList'
 
 export default {
   name: 'VCHeader',

@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetch_courses: 'student/fetch'
+      fetch: 'student/fetch'
     })
   },
   mounted () {
     if (!this.students_loaded) {
-      this.fetch_courses()
+      this.fetch()
         .then(response => {
           this.loaded = true
           console.log('Loaded')

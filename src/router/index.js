@@ -17,6 +17,7 @@ import Signup from '../components/Signup'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/courses',
@@ -26,12 +27,14 @@ export default new Router({
     {
       path: '/course/:id',
       name: 'course',
-      component: Course
+      component: Course,
+      props: true
     },
     {
       path: '/course/:id/edit',
       name: 'course-edit',
-      component: CourseEdit
+      component: CourseEdit,
+      props: true
     },
     {
       path: '/students',
@@ -41,7 +44,8 @@ export default new Router({
     {
       path: '/student/:id',
       name: 'student',
-      component: Student
+      component: Student,
+      props: true
     },
     {
       path: '/',
@@ -56,12 +60,14 @@ export default new Router({
     {
       path: '/assignment/:id',
       name: 'assignment',
-      component: Assignment
+      component: Assignment,
+      props: true
     },
     {
       path: '/assignment/:id/edit',
       name: 'assignment-edit',
-      component: AssignmentEdit
+      component: AssignmentEdit,
+      props: true
     },
     {
       path: '/about',
@@ -86,7 +92,8 @@ export default new Router({
     {
       path: '/student/:id/edit',
       name: 'student-edit',
-      component: StudentEdit
+      component: StudentEdit,
+      props: true
     }
   ]
 })

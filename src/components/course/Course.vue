@@ -62,6 +62,7 @@ import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'Course',
   components: {CourseAssignmentRow},
+  props: ['id'],
   data () {
     return {
       course: null,
@@ -77,7 +78,7 @@ export default {
   methods: {
     ...mapActions({fetch_courses: 'course/fetch'}),
     update: function () {
-      this.course = this.courseInfo(this.$route.params.id)
+      this.course = this.courseInfo(this.id)
       this.loading = false
     }
   },

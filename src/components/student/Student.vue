@@ -48,6 +48,7 @@ import {mapGetters, mapState, mapActions} from 'vuex'
 export default {
   name: 'Student',
   components: {CopyButton, StudentCourses, VCFooter},
+  props: ['id'],
   data () {
     return {
       student: null,
@@ -68,7 +69,7 @@ export default {
       coursesFor: 'course/fetch_courses_for'
     }),
     update: function () {
-      this.student = this.studentInfo(this.$route.params.id)
+      this.student = this.studentInfo(this.id)
       this.loading = false
     }
   },

@@ -14,6 +14,7 @@ import {mapGetters, mapActions, mapState} from 'vuex'
 export default {
   name: 'AssignmentEdit',
   components: {AuthorizedDiv, AssignmentForm},
+  props: ['id'],
   data () {
     return {
       assignment: null
@@ -34,7 +35,7 @@ export default {
       fetch: 'assignment/fetch'
     }),
     update: function () {
-      this.assignment = this.assignmentInfo(this.$route.params.id)
+      this.assignment = this.assignmentInfo(this.id)
       this.loading = false
     }
   },

@@ -1,6 +1,10 @@
 <template>
   <div id="login">
     <h1>Log In</h1>
+    <div v-if="authenticated">
+      <router-link :to="{name: 'home'}">Home</router-link>
+    </div>
+    <div v-else>
     <form @submit.prevent="handleSubmit">
     <table>
       <tr>
@@ -34,14 +38,17 @@
     <div id="error" v-if="failed">
       <p>Invalid email or password. Please try again</p>
     </div>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
+import AuthenticatedDiv from './components/AuthenticatedDiv'
 
 export default {
   name: 'Login',
+  components: {AuthenticatedDiv},
   data () {
     return {
       sign_in: {
@@ -53,7 +60,8 @@ export default {
   },
   computed: {
     ...mapState({
-      current_user: state => state.user.user
+      current_user: state => state.user.user,
+      authenticated: state => state.user.authenticated
     })
   },
   methods: {
