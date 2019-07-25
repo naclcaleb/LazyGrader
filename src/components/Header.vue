@@ -2,7 +2,7 @@
   <ul id="navbar">
     <li class="logo"><a href="https://www.venturacollege.edu/" target="_blank"><img src="../assets/VC-logo.png" alt=""/></a></li>
     <li><router-link :to="{name: 'home'}">Home</router-link></li>
-    <authenticated-item><router-link :to="{name: 'students'}">Students</router-link></authenticated-item>
+    <authenticated-item><router-link :to="{name: 'students'}" :role="current_user ? current_user.role: null" :id="current_user ? current_user.id: null">Students</router-link></authenticated-item>
     <authenticated-item><router-link :to="{name: 'assignments'}">Assignments</router-link></authenticated-item>
     <authorized-item :role="'admin'"><router-link :to="{name: 'settings'}">Settings</router-link></authorized-item>
     <li><router-link :to="{name: 'about'}">About</router-link></li>

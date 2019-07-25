@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading"><loading-spinner></loading-spinner></div>
     <div v-else>
       <h1> {{course.course_info.short_name}} - {{course.course_info.long_name}}</h1>
 
@@ -58,11 +58,12 @@
 <script>
 import CourseAssignmentRow from './CourseAssignmentRow'
 import {mapGetters, mapActions} from 'vuex'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default {
   name: 'Course',
-  components: {CourseAssignmentRow},
   props: ['id'],
+  components: {LoadingSpinner, CourseAssignmentRow},
   data () {
     return {
       course: null,

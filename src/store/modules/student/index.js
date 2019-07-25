@@ -49,7 +49,7 @@ export default {
   actions: {
     fetch: function (context, data) {
       context.commit('loaded', false)
-      return Vue.axios.get(lazy.url('students'), {headers: this.getters['user/headers']})
+      return Vue.axios.get(lazy.url('students'))
         .then(response => {
           context.commit('collection', response.data)
           return Promise.resolve(response)
@@ -57,7 +57,7 @@ export default {
     },
 
     get_assignment_status: function (context, [studentId, assignmentId]) {
-      return Vue.axios.get(lazy.url(`students/${studentId}/status/${assignmentId}`), {headers: this.getters['user/headers']})
+      return Vue.axios.get(lazy.url(`students/${studentId}/status/${assignmentId}`))
         .then(response => {
           return Promise.resolve(response)
         })
@@ -67,7 +67,7 @@ export default {
     },
 
     upload: function (context, data) {
-      return Vue.axios.put(lazy.url(`students/${data.id}`), data, {headers: this.getters['user/headers']})
+      return Vue.axios.put(lazy.url(`students/${data.id}`), data)
         .then(response => {
           return Promise.resolve(response)
         })

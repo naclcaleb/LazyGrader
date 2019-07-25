@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="student == null" class="loading">Loading...</div>
+    <div v-if="student == null" class="loading"><loading-spinner></loading-spinner></div>
     <div v-else>
       <h1>{{ student.name }}</h1>
 
@@ -33,7 +33,7 @@
       </table>
     </div>
     <h2>Courses</h2>
-    <div v-if="courses == null" class="loading">Loading...</div>
+    <div v-if="courses == null" class="loading"><loading-spinner></loading-spinner></div>
     <student-courses v-else :courses="courses"/>
     <router-link v-if="student != null" :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
   </div>
@@ -44,11 +44,12 @@ import StudentCourses from './StudentCourses'
 import VCFooter from '../Footer'
 import CopyButton from '../components/CopyButton'
 import {mapGetters, mapState, mapActions} from 'vuex'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default {
   name: 'Student',
-  components: {CopyButton, StudentCourses, VCFooter},
   props: ['id'],
+  components: {LoadingSpinner, CopyButton, StudentCourses, VCFooter},
   data () {
     return {
       student: null,
@@ -71,6 +72,13 @@ export default {
     update: function () {
       this.student = this.studentInfo(this.id)
       this.loading = false
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (to.params.role === 'student') {
+      next('/student/:id')
+    } else {
+      next()
     }
   },
   mounted () {

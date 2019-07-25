@@ -49,7 +49,6 @@ export default {
       this.fetch()
         .then(response => {
           this.loaded = true
-          console.log('Loaded')
         })
     }
   }

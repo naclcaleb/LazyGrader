@@ -1,7 +1,7 @@
 <template>
   <div id="edit">
     <h1>Edit Student</h1>
-    <div v-if="local_student == null">Loading...</div>
+    <div v-if="local_student == null"><loading-spinner></loading-spinner></div>
     <div v-else id="edit-form">
       <table>
         <tr>
@@ -45,8 +45,10 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import LoadingSpinner from '../components/LoadingSpinner'
 export default {
   name: 'StudentForm',
+  components: {LoadingSpinner},
   data () {
     return {
       local_student: null,

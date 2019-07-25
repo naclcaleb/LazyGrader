@@ -78,6 +78,9 @@ export default {
           context.commit('client', response.headers.client)
           context.commit('uid', response.headers.uid)
           context.commit('user', response.data.data)
+          Vue.axios.defaults.headers.common['access-token'] = this.token
+          Vue.axios.defaults.headers.common['client'] = this.client
+          Vue.axios.defaults.headers.common['uid'] = this.uid
           localStorage.setItem('user', JSON.stringify(response.data.data))
           localStorage.setItem('token', response.headers['access-token'])
           localStorage.setItem('uid', response.headers.uid)
@@ -106,6 +109,9 @@ export default {
           localStorage.removeItem('token')
           localStorage.removeItem('uid')
           localStorage.removeItem('client')
+          delete Vue.axios.defaults.headers.common['access-token']
+          delete Vue.axios.defaults.headers.common['client']
+          delete Vue.axios.defaults.headers.common['uid']
           this.commit('student/reset')
           this.commit('course/reset')
           commit('reset')

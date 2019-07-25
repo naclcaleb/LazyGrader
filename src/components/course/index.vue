@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading"><loading-spinner></loading-spinner></div>
     <div v-else class="courses-table">
       <h1>{{ title }}</h1>
       <div class="course-row">
@@ -15,10 +15,11 @@
 <script>
 import CourseRow from './CourseRow'
 import {mapGetters, mapState, mapActions} from 'vuex'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default {
   name: 'Courses',
-  components: {CourseRow},
+  components: {LoadingSpinner, CourseRow},
   data () {
     return {
       loading: true

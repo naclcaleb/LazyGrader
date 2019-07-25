@@ -7,6 +7,7 @@ import Notifications from 'vue-notification'
 import moment from 'moment'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(Notifications)
@@ -17,7 +18,7 @@ Vue.filter('formatDate', function (value) {
     return moment(String(value)).format('MM/DD/YYYY')
   }
 })
-
+store.initializeModules()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

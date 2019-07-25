@@ -17,6 +17,7 @@ import store from './store'
 import VCFooter from './components/Footer'
 import VCHeader from './components/Header'
 import {mapState, mapActions, mapMutations} from 'vuex'
+import Vue from 'vue'
 
 export default {
   name: 'App',
@@ -39,17 +40,22 @@ export default {
     })
   },
   created () {
-    this.$store.initializeModules()
     if (localStorage.getItem('user') !== null) {
       this.token(localStorage.getItem('token'))
       this.client(localStorage.getItem('client'))
       this.uid(localStorage.getItem('uid'))
+      Vue.axios.defaults.headers.common['access-token'] = localStorage.getItem('token')
+      Vue.axios.defaults.headers.common['client'] = localStorage.getItem('client')
+      Vue.axios.defaults.headers.common['uid'] = localStorage.getItem('uid')
       this.user(JSON.parse(localStorage.getItem(('user'))))
       this.authenticated(true)
     }
+    if (localStorage.getItem('title') !== null) {
+      document.title = localStorage.getItem('title')
+    }
     this.fetch_courses().then(response => {
-      console.log(this.title)
       document.title = this.title
+      localStorage.setItem('title', this.title)
     })
   },
   store

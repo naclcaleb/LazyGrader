@@ -9,11 +9,12 @@
 <script>
 import CourseForm from './CourseForm'
 import {mapGetters} from 'vuex'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default {
   name: 'CourseEdit',
-  components: {CourseForm},
   props: ['id'],
+  components: {LoadingSpinner, CourseForm},
   data () {
     return {
       course: null

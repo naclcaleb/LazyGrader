@@ -1,5 +1,5 @@
 <template>
-  <li v-if="authenticated && user.role == role">
+  <li v-if="authenticated && user && user.role == role">
     <slot></slot>
   </li>
 </template>

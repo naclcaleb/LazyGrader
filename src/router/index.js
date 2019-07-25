@@ -13,8 +13,27 @@ import Assignment from '../components/assignment/Assignment'
 import AssignmentEdit from '../components/assignment/AssignmentEdit'
 import Login from '../components/Login'
 import Signup from '../components/Signup'
+import store from '../store'
 
 Vue.use(Router)
+
+const chooseRoute = function (collection, name, next) {
+  if (collection.length !== 1) {
+    next()
+  } else {
+    next({name: name, params: {id: collection[0].id}})
+  }
+}
+
+const chooseBeforeEnter = function (collection, name, next) {
+  if (collection.length === 0) {
+    store.dispatch(`${name}/fetch`).then(response => {
+      chooseRoute(response.data, name, next)
+    })
+  } else {
+    chooseRoute(store.state.student.collection, name, next)
+  }
+}
 
 export default new Router({
   mode: 'history',
@@ -39,7 +58,10 @@ export default new Router({
     {
       path: '/students',
       name: 'students',
-      component: Students
+      component: Students,
+      beforeEnter: (to, from, next) => {
+        chooseBeforeEnter(store.state.student.collection, 'student', next)
+      }
     },
     {
       path: '/student/:id',
@@ -50,12 +72,18 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Courses
+      component: Courses,
+      beforeEnter: (to, from, next) => {
+        chooseBeforeEnter(store.state.course.collection, 'course', next)
+      }
     },
     {
       path: '/assignments',
       name: 'assignments',
-      component: Assignments
+      component: Assignments,
+      beforeEnter: (to, from, next) => {
+        chooseBeforeEnter(store.state.assignment.collection, 'assignment', next)
+      }
     },
     {
       path: '/assignment/:id',
