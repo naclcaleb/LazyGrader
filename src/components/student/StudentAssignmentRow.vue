@@ -54,17 +54,18 @@ export default {
   mounted () {
     this.get_assignment_status([this.student.id, this.assignment.id])
       .then(function (response) {
+        console.log('status: ', response)
         this.color = response.data.color
         this.build_status_url = response.data.build_url
         this.grade_value = response.data.grade
-        if (response.data.error !== 'Not Found' && response.status === 200) {
-          this.show_buttons = true
-        }
-      })
+        this.show_buttons = response.data.error !== 'Not Found' && response.status === 200
+        console.log('this: ', this)
+      }.bind(this))
       .catch(function (response) {
         console.log('Unable to get assignment status: ', response)
+        console.log('This: ', this)
         this.starting = true
-      })
+      }.bind(this))
   }
 }
 </script>

@@ -41,14 +41,20 @@ export default {
   },
   created () {
     if (localStorage.getItem('user') !== null) {
+      this.user(JSON.parse(localStorage.getItem(('user'))))
+      this.authenticated(true)
+    }
+    if (localStorage.getItem('token') && localStorage.getItem('client') && localStorage.getItem(('uid'))) {
       this.token(localStorage.getItem('token'))
       this.client(localStorage.getItem('client'))
       this.uid(localStorage.getItem('uid'))
       Vue.axios.defaults.headers.common['access-token'] = localStorage.getItem('token')
       Vue.axios.defaults.headers.common['client'] = localStorage.getItem('client')
       Vue.axios.defaults.headers.common['uid'] = localStorage.getItem('uid')
-      this.user(JSON.parse(localStorage.getItem(('user'))))
-      this.authenticated(true)
+    } else {
+      delete Vue.axios.defaults.headers.common['access-token']
+      delete Vue.axios.defaults.headers.common['client']
+      delete Vue.axios.defaults.headers.common['uid']
     }
     if (localStorage.getItem('title') !== null) {
       document.title = localStorage.getItem('title')

@@ -78,9 +78,9 @@ export default {
           context.commit('client', response.headers.client)
           context.commit('uid', response.headers.uid)
           context.commit('user', response.data.data)
-          Vue.axios.defaults.headers.common['access-token'] = this.token
-          Vue.axios.defaults.headers.common['client'] = this.client
-          Vue.axios.defaults.headers.common['uid'] = this.uid
+          Vue.axios.defaults.headers.common['access-token'] = response.headers['access-token']
+          Vue.axios.defaults.headers.common['client'] = response.headers.client
+          Vue.axios.defaults.headers.common['uid'] = response.headers.uid
           localStorage.setItem('user', JSON.stringify(response.data.data))
           localStorage.setItem('token', response.headers['access-token'])
           localStorage.setItem('uid', response.headers.uid)

@@ -35,7 +35,7 @@ const chooseBeforeEnter = function (collection, name, next) {
   }
 }
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -125,3 +125,13 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (!store.state.user.authenticated && to.path !== '/login') {
+    next({name: 'login'})
+  } else {
+    next()
+  }
+})
+
+export default router
