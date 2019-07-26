@@ -3,6 +3,7 @@
     <div v-if="loading"><loading-spinner></loading-spinner></div>
     <div v-else class="courses-table">
       <h1>{{ title }}</h1>
+      <bulk-upload></bulk-upload>
       <div class="course-row">
         <div class="course-name table-header">Course Info</div>
         <div class="course-term table-header">Info</div>
@@ -16,10 +17,11 @@
 import CourseRow from './CourseRow'
 import {mapGetters, mapState, mapActions} from 'vuex'
 import LoadingSpinner from '../components/LoadingSpinner'
+import BulkUpload from '../components/BulkUpload'
 
 export default {
   name: 'Courses',
-  components: {LoadingSpinner, CourseRow},
+  components: {BulkUpload, LoadingSpinner, CourseRow},
   data () {
     return {
       loading: true

@@ -3,6 +3,7 @@
     <h1>{{ title }}</h1>
     <authenticated-div>
       <div class="students-table">
+        <bulk-upload></bulk-upload>
         <div class="student-row">
           <div class="student-name header">Name</div>
           <div class="student-email header">Email</div>
@@ -21,10 +22,12 @@
 import {mapState, mapActions} from 'vuex'
 import StudentRow from './StudentRow'
 import AuthenticatedDiv from '../components/AuthenticatedDiv'
+import AuthorizedDiv from '../components/AuthorizedDiv'
+import bulkUpload from '../components/BulkUpload'
 
 export default {
   name: 'Students',
-  components: {AuthenticatedDiv, StudentRow},
+  components: {AuthorizedDiv, AuthenticatedDiv, StudentRow, bulkUpload},
   data () {
     return {
       title: 'Ventura College Students',

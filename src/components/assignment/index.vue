@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Assignments</h1>
+    <bulk-upload></bulk-upload>
     <div v-for="course in courses" :key="course.id">
       <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
       <div class="assignments-table">
@@ -23,10 +24,11 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import AuthorizedDiv from '../components/AuthorizedDiv'
+import BulkUpload from '../components/BulkUpload'
 
 export default {
   name: 'Assignment',
-  components: {AuthorizedDiv},
+  components: {AuthorizedDiv, BulkUpload},
   data () {
     return {
       loading: true
