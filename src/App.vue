@@ -13,23 +13,19 @@
 </template>
 
 <script>
-import store from './store'
 import VCFooter from './components/Footer'
 import VCHeader from './components/Header'
 import {mapState, mapActions, mapMutations} from 'vuex'
-import Vue from 'vue'
 
 export default {
   name: 'App',
   components: {VCHeader, VCFooter},
   methods: {
     ...mapActions({
-      fetch_courses: 'settings/fetch'
+      fetch: 'settings/fetch',
+      fetch_courses: 'course/fetch'
     }),
     ...mapMutations({
-      token: 'user/token',
-      client: 'user/client',
-      uid: 'user/uid',
       user: 'user/user',
       authenticated: 'user/authenticated'
     })
@@ -40,31 +36,15 @@ export default {
     })
   },
   created () {
-    if (localStorage.getItem('user') !== null) {
-      this.user(JSON.parse(localStorage.getItem(('user'))))
-      this.authenticated(true)
-    }
-    if (localStorage.getItem('token') && localStorage.getItem('client') && localStorage.getItem(('uid'))) {
-      this.token(localStorage.getItem('token'))
-      this.client(localStorage.getItem('client'))
-      this.uid(localStorage.getItem('uid'))
-      Vue.axios.defaults.headers.common['access-token'] = localStorage.getItem('token')
-      Vue.axios.defaults.headers.common['client'] = localStorage.getItem('client')
-      Vue.axios.defaults.headers.common['uid'] = localStorage.getItem('uid')
-    } else {
-      delete Vue.axios.defaults.headers.common['access-token']
-      delete Vue.axios.defaults.headers.common['client']
-      delete Vue.axios.defaults.headers.common['uid']
-    }
+    this.fetch_courses()
     if (localStorage.getItem('title') !== null) {
       document.title = localStorage.getItem('title')
     }
-    this.fetch_courses().then(response => {
+    this.fetch().then(response => {
       document.title = this.title
       localStorage.setItem('title', this.title)
     })
-  },
-  store
+  }
 }
 </script>
 

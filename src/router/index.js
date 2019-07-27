@@ -31,7 +31,7 @@ const chooseBeforeEnter = function (collection, name, next) {
       chooseRoute(response.data, name, next)
     })
   } else {
-    chooseRoute(store.state.student.collection, name, next)
+    chooseRoute(collection, name, next)
   }
 }
 

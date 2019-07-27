@@ -4,7 +4,7 @@ import lazy from '../../../lib/vclazygrader'
 export default {
   namespaced: true,
   state: {
-    settings: null,
+    settings: {title: 'LazyGrader'},
     loaded: false
   },
 
@@ -29,7 +29,7 @@ export default {
       context.commit('loaded', false)
       return Vue.axios.get(lazy.url('settings'), {headers: this.getters['user/headers']})
         .then(response => {
-          context.commit('settings', response.data[0])
+          context.commit('settings', response.data)
           return Promise.resolve(response)
         })
     },

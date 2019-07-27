@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading"><loading-spinner></loading-spinner></div>
+    <div v-if="!loaded"><loading-spinner></loading-spinner></div>
     <div v-else>
       <h1> {{course.course_info.short_name}} - {{course.course_info.long_name}}</h1>
 
@@ -66,8 +66,7 @@ export default {
   components: {LoadingSpinner, CourseAssignmentRow},
   data () {
     return {
-      course: null,
-      loading: true
+      course: null
     }
   },
   computed: {
@@ -80,7 +79,6 @@ export default {
     ...mapActions({fetch_courses: 'course/fetch'}),
     update: function () {
       this.course = this.courseInfo(this.id)
-      this.loading = false
     }
   },
   mounted () {
@@ -90,6 +88,9 @@ export default {
       this.fetch_courses()
         .then(response => {
           this.update()
+        })
+        .catch(error => {
+          console.log('error: ', error)
         })
     }
   }

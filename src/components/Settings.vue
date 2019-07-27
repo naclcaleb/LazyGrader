@@ -1,5 +1,5 @@
 <template>
-  <div id="settings">
+  <div v-if="loaded" id="settings">
     <h1>Settings</h1>
       <authorized-div :role="'admin'">
         <form @submit.prevent="handleSubmit">
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetch_courses: 'settings/fetch',
+      fetch: 'settings/fetch',
       upload: 'settings/upload'
     }),
 
@@ -122,8 +122,8 @@ export default {
     }
   },
   mounted () {
-    this.fetch_courses().then(response => {
-      console.log(response)
+    this.fetch().then(response => {
+      console.log('settings: ', this.remote_settings)
       this.loaded = true
     })
   }
