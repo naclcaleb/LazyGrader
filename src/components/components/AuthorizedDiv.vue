@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!authenticated || user.role != role">
-      <router-link :to="{name: 'login'}">Login</router-link>
+      <router-link v-if="allow_login" :to="{name: 'login'}">Login</router-link>
     </div>
     <slot v-else></slot>
   </div>
@@ -13,7 +13,11 @@ import {mapState} from 'vuex'
 export default {
   name: 'AuthorizedDiv',
   props: {
-    role: String
+    role: String,
+    allow_login: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     ...mapState({

@@ -2,8 +2,8 @@
   <div>
     <h1>{{ title }}</h1>
     <authenticated-div>
+      <bulk-upload></bulk-upload>
       <div class="students-table">
-        <bulk-upload></bulk-upload>
         <div class="student-row">
           <div class="student-name header">Name</div>
           <div class="student-email header">Email</div>

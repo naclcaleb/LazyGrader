@@ -1,28 +1,39 @@
 <template>
   <div>
-    <StudentForm v-bind:student="student"></StudentForm>
+    <div v-if="student == null">
+      Students can only edit their own profile
+    </div>
+    <StudentForm v-else v-bind:student="student"></StudentForm>
   </div>
 </template>
 
 <script>
 import StudentForm from './StudentForm'
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'StudentEdit',
   components: {StudentForm},
   props: ['id'],
-  data () {
-    return {
-      student: null
-    }
-  },
   computed: {
     ...mapGetters({
       findStudent: 'student/find'
+    }),
+
+    student: function () {
+      return this.findStudent(this.id)
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      fetch: 'student/fetch'
     })
   },
+
   mounted () {
-    this.student = this.findStudent(this.id)
+    if (!this.$store.state.student.loaded) {
+      this.fetch()
+    }
   }
 }
 </script>

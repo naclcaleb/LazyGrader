@@ -1,6 +1,9 @@
 <template>
   <div v-if="loaded" id="settings">
     <h1>Settings</h1>
+    <div v-if="$store.state.user.user.role !== 'admin'">
+      Only administrators can update settings
+    </div>
       <authorized-div :role="'admin'">
         <form @submit.prevent="handleSubmit">
           <table>
@@ -66,17 +69,17 @@ export default {
         canvas_url: '',
         jenkins_url: '',
         secrets: ''
-      },
-      loaded: false
+      }
     }
   },
+
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role,
-      remote_settings: state => state.settings.settings
+      remote_settings: state => state.settings.settings,
+      loaded: state => state.settings.loaded
     })
   },
+
   methods: {
     ...mapActions({
       fetch: 'settings/fetch',
@@ -121,11 +124,11 @@ export default {
       })
     }
   },
+
   mounted () {
-    this.fetch().then(response => {
-      console.log('settings: ', this.remote_settings)
-      this.loaded = true
-    })
+    if (!this.loaded) {
+      this.fetch()
+    }
   }
 }
 </script>

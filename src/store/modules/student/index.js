@@ -41,6 +41,10 @@ export default {
       state.loaded = data
     },
 
+    update: function (state, data) {
+      state.collection = _.union(state.collection, data)
+    },
+
     reset: function (state) {
       Object.assign(state, defaultValues())
     }
@@ -69,6 +73,14 @@ export default {
     upload: function (context, data) {
       return Vue.axios.put(lazy.url(`students/${data.id}`), data)
         .then(response => {
+          return Promise.resolve(response)
+        })
+    },
+
+    bulk: function (context, data) {
+      return Vue.axios.post(lazy.url('students/upload'), data)
+        .then(response => {
+          context.commit('update', response.data)
           return Promise.resolve(response)
         })
     }

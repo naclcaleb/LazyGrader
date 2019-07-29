@@ -70,7 +70,6 @@ export default {
     }),
     handleSubmit: function () {
       this.course.course_info_id = this.selected
-      console.log('submit: ', this.course)
       this.$router.push({name: 'course', params: {id: this.course.id}})
       this.$notify({
         group: 'grade',

@@ -32,7 +32,6 @@ export default {
     }),
 
     handleSignOut: function () {
-      console.log('Signing out')
       this.signOut()
         .then(response => {
           console.log('Signed out: ', response)

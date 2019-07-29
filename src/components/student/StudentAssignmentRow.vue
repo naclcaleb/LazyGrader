@@ -59,11 +59,9 @@ export default {
         this.build_status_url = response.data.build_url
         this.grade_value = response.data.grade
         this.show_buttons = response.data.error !== 'Not Found' && response.status === 200
-        console.log('this: ', this)
       }.bind(this))
       .catch(function (response) {
         console.log('Unable to get assignment status: ', response)
-        console.log('This: ', this)
         this.starting = true
       }.bind(this))
   }

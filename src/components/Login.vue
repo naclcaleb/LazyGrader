@@ -71,7 +71,6 @@ export default {
     handleSubmit: function () {
       this.signIn(this.sign_in)
         .then(response => {
-          console.log('Sign in: ', this.current_user)
           this.$notify({
             group: 'auth',
             title: 'Logged In',

@@ -20,7 +20,6 @@ export default {
 
   getters: {
     find: (state, getters) => (id) => {
-      console.log('collection: ', state.collection)
       if (typeof (id) === 'string') id = parseInt(id)
       return _.find(state.collection, ['id', id])
     },

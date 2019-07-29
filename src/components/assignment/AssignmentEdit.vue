@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="$store.state.user.user.role !== 'admin'">
+      Only administrators can edit this resource
+    </div>
     <authorized-div :role="'admin'">
       <AssignmentForm v-bind:assignment="assignment"></AssignmentForm>
     </authorized-div>
@@ -9,44 +12,25 @@
 <script>
 import AssignmentForm from './AssignmentForm'
 import AuthorizedDiv from '../components/AuthorizedDiv'
-import {mapGetters, mapActions, mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'AssignmentEdit',
   components: {AuthorizedDiv, AssignmentForm},
   props: ['id'],
-  data () {
-    return {
-      assignment: null
-    }
-  },
   computed: {
-    ...mapState({
-      authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role,
-      loaded: state => state.assignment.loaded
-    }),
     ...mapGetters({
       assignmentInfo: 'assignment/find'
-    })
-  },
-  methods: {
-    ...mapActions({
-      fetch: 'assignment/fetch'
     }),
-    update: function () {
-      this.assignment = this.assignmentInfo(this.id)
-      this.loading = false
+
+    assignment: function () {
+      return this.assignmentInfo(this.id)
     }
   },
+
   mounted () {
-    if (!this.loaded) {
-      this.fetch()
-        .then(response => {
-          this.update()
-        })
-    } else {
-      this.update()
+    if (!this.$store.state.assignment.loaded) {
+      this.$store.dispatch('assignment/fetch')
     }
   }
 }

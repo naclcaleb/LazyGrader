@@ -1,11 +1,11 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 const backendHost = 'localhost:3000'
 const apiPrefix = 'api/v1'
 const authPrefix = 'auth'
 
 function lazyRequestPromise (path) {
-  return axios
+  return Vue.axios
     .get(`http://${backendHost}/${apiPrefix}/${path}`)
 }
 

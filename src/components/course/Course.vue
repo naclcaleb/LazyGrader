@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="!loaded"><loading-spinner></loading-spinner></div>
+    <div v-if="!loaded" class="loading"><loading-spinner></loading-spinner></div>
+    <div v-else-if="course == null">
+      Unable to display information about courses for which you are not enrolled
+    </div>
     <div v-else>
       <h1> {{course.course_info.short_name}} - {{course.course_info.long_name}}</h1>
 
@@ -45,11 +48,11 @@
           <course-assignment-row v-for="assignment in course.assignments" :key="assignment.id" v-bind="{assignment, course}"/>
         </div>
       </div>
-      <div class="edit-link">
+      <authorized-div class="edit-link" :role="'admin'">
         <router-link :to="{name: 'course-edit', params: {id: course.id}}" tag="button">
           Edit
         </router-link>
-      </div>
+      </authorized-div>
     </div>
 
   </div>
@@ -59,36 +62,28 @@
 import CourseAssignmentRow from './CourseAssignmentRow'
 import {mapGetters, mapActions} from 'vuex'
 import LoadingSpinner from '../components/LoadingSpinner'
+import AuthorizedDiv from '../components/AuthorizedDiv'
 
 export default {
   name: 'Course',
   props: ['id'],
-  components: {LoadingSpinner, CourseAssignmentRow},
-  data () {
-    return {
-      course: null
-    }
-  },
+  components: {AuthorizedDiv, LoadingSpinner, CourseAssignmentRow},
   computed: {
     ...mapGetters({
       courseInfo: 'course/find',
       loaded: 'course/loaded'
-    })
-  },
-  methods: {
-    ...mapActions({fetch_courses: 'course/fetch'}),
-    update: function () {
-      this.course = this.courseInfo(this.id)
+    }),
+
+    course: function () {
+      return this.$store.getters['course/find'](this.id)
     }
   },
+  methods: {
+    ...mapActions({fetch_courses: 'course/fetch'})
+  },
   mounted () {
-    if (this.loaded) {
-      this.update()
-    } else {
+    if (!this.loaded) {
       this.fetch_courses()
-        .then(response => {
-          this.update()
-        })
         .catch(error => {
           console.log('error: ', error)
         })

@@ -24,7 +24,7 @@ export default {
         group: 'build',
         title: 'Build Result',
         duration: 10000,
-        text: 'Green good. Your code compile with no errors, and all tests passed'
+        text: 'Green good. Your code compiled with no errors, and all tests passed'
       })
     },
 
@@ -33,14 +33,14 @@ export default {
         group: 'build',
         title: 'Build Result',
         duration: 10000,
-        text: 'Red bad. Your code compile with errors, fix \'em and try again',
+        text: 'Red bad. Your code compiled with errors, fix \'em and try again',
         type: 'error'
       })
     },
 
     build_success: function (response) {
       this.$emit('update:color', response.data.job_status)
-      if (this.color === 'blue') {
+      if (response.data.job_status === 'blue') {
         this.notify_success()
       } else {
         this.notify_failure()
@@ -65,7 +65,6 @@ export default {
 
       lazy.build_assignment(student.id, assignment.id)
         .then(response => {
-          console.log('Response: ', response)
           this.build_success(response)
         }).catch(error => {
           this.build_failure(error)

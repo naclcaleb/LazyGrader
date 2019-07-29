@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>Edit Course</h1>
-    <div v-if="course == null" class="loading">Loading...</div>
+    <div v-if="this.$store.state.user.user.role !== 'admin'">
+      Only administers can edit this resource
+    </div>
+    <div v-else-if="course == null" class="loading">Loading...</div>
     <course-form v-else :course="course"/>
   </div>
 </template>
@@ -15,24 +18,14 @@ export default {
   name: 'CourseEdit',
   props: ['id'],
   components: {LoadingSpinner, CourseForm},
-  data () {
-    return {
-      course: null
-    }
-  },
   computed: {
     ...mapGetters({
       find_course: 'course/find'
-    })
-  },
-  methods: {
-    update: function () {
-      this.course = this.find_course(this.id)
-      console.log('Course: ', this.course)
+    }),
+
+    course: function () {
+      return this.find_course(this.id)
     }
-  },
-  mounted () {
-    this.update()
   }
 }
 </script>
