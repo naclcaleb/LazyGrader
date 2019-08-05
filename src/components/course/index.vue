@@ -3,7 +3,7 @@
     <div v-if="loading"><loading-spinner></loading-spinner></div>
     <div v-else class="courses-table">
       <h1>{{ title }}</h1>
-      <bulk-upload></bulk-upload>
+      <bulk-upload class="bulk-upload" v-bind:resource_type="'course'"></bulk-upload>
       <div class="course-row">
         <div class="course-name table-header">Course Info</div>
         <div class="course-term table-header">Info</div>
@@ -64,6 +64,12 @@ h2 {
 
 .table-header {
   font-weight: bold;
+}
+
+.bulk-upload {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .course-long, .course-name {

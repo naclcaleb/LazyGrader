@@ -1,7 +1,7 @@
 <template>
-  <button class="start-button" @click="action_start($event.target, assignment, student)">
+  <b-btn class="start-button" variant="success" size="sm" @click="action_start($event.target, assignment, student)">
     {{start_button_text}}
-  </button>
+  </b-btn>
 
 </template>
 
@@ -40,15 +40,9 @@ export default {
   .start-button {
     margin-left: 4px;
     width: 75px;
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
     padding: 4px 8px;
-    text-align: center;
-    text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
 
   .start-button:disabled {

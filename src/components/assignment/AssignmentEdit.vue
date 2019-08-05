@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centered">
     <div v-if="$store.state.user.user.role !== 'admin'">
       Only administrators can edit this resource
     </div>
@@ -37,5 +37,7 @@ export default {
 </script>
 
 <style scoped>
-
+.centered {
+  text-align: center;
+}
 </style>

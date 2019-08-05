@@ -1,6 +1,6 @@
 <template>
   <div v-if="loaded" id="settings">
-    <h1>Settings</h1>
+    <h1 class="centered">Settings</h1>
     <div v-if="$store.state.user.user.role !== 'admin'">
       Only administrators can update settings
     </div>
@@ -137,6 +137,9 @@ export default {
   table{
     margin:auto;
     text-align: left;
+  }
+  .centered {
+    text-align: center;
   }
   table tr td input{
     margin-bottom:5px;

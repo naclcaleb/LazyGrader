@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centered">
     <div v-if="!loaded" class="loading"><loading-spinner></loading-spinner></div>
     <div v-else-if="student == null">
       Unable to display information about another student
@@ -35,7 +35,7 @@
         </tr>
       </table>
       <div  v-if="student != null">
-        <router-link :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
+        <router-link class="edit-link" :to="{name: 'student-edit', params: {id: student.id}}" tag="button">Edit</router-link>
       </div>
       <h2>Courses</h2>
       <div v-if="courses == null" class="loading"><loading-spinner></loading-spinner></div>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetch_courses: 'student/fetch',
+      fetch: 'student/fetch',
       coursesFor: 'course/fetch_courses_for'
     })
   },
@@ -88,7 +88,7 @@ export default {
   },
   mounted () {
     if (!this.loaded) {
-      this.fetch_courses()
+      this.fetch()
     }
 
     this.coursesFor(this.$route.params.id)
@@ -124,6 +124,15 @@ export default {
 td{
   border: 1px solid black;
   padding:0;
+}
+
+.edit-link {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.centered {
+  text-align: center;
 }
 #copyButton{
   padding-left: 5px;

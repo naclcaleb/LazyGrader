@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centered">
     <h2>{{course.course_info.long_name}}</h2>
 
     <form id="course-edit" @submit.prevent="handleSubmit">
@@ -107,5 +107,9 @@ export default {
   }
   #course-edit #submit{
     margin-right: 20px;
+  }
+
+  .centered {
+    text-align: center;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="course-name">
-    {{ course.course_info.short_name }} - {{ course.course_info.long_name }} {{ course.term }} Assignments
+    {{ course.course_info.long_name }} Assignments
     <div class="assignment-table">
     <student-assignment-row v-for="assignment in assignments" :assignment="assignment" :key="assignment.id" :student="student"/>
     </div>
@@ -44,6 +44,8 @@ export default {
 .course-name {
   text-align: left;
   font-weight: bolder;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 .assignment-table {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centered">
     <div v-if="!loaded" class="loading"><loading-spinner></loading-spinner></div>
     <div v-else-if="assignment == null">
       Unable to display assignment for course for which you are not enrolled
@@ -108,4 +108,8 @@ table tr td{
 .edit-link {
   padding-top: 25px;
 }
+
+  .centered {
+    text-align: center;
+  }
 </style>

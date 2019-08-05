@@ -5,7 +5,7 @@
       Unable to display information about courses for which you are not enrolled
     </div>
     <div v-else>
-      <h1> {{course.course_info.short_name}} - {{course.course_info.long_name}}</h1>
+      <h1 class="course-name"> {{course.course_info.short_name}} - {{course.course_info.long_name}}</h1>
 
       <div class="course-table">
         <div class = course-row>
@@ -25,49 +25,69 @@
           <div class="course-canvas_id"><a :href="course.course_info.github_org" target="_blank">{{course.course_info.github_org}}</a></div>
         </div>
       </div>
-      <div>
-        <h3 class="assignments-label">Assignments</h3>
-        <div class="assignments-table">
-          <div class="assignments-row">
-            <div class="assignments-name header">
-              Name
-            </div>
-            <div class="assignments-due header">
-              Due
-            </div>
-            <div class="assignments-open header">
-              Opens
-            </div>
-            <div class="assignments-close header">
-              Closes
-            </div>
-            <div class="assignments-close header">
-              Actions
-            </div>
-          </div>
-          <course-assignment-row v-for="assignment in course.assignments" :key="assignment.id" v-bind="{assignment, course}"/>
-        </div>
-      </div>
       <authorized-div class="edit-link" :role="'admin'">
         <router-link :to="{name: 'course-edit', params: {id: course.id}}" tag="button">
-          Edit
+          <div class="edit-link-text">Edit</div>
         </router-link>
       </authorized-div>
+      <b-tabs>
+        <b-tab title="Assignments">
+          <assignment-table :assignments="course.assignments"/>
+        </b-tab>
+        <b-tab title="Students">
+          <student-table :students="course.enrollments" :course="course"></student-table>
+        </b-tab>
+      </b-tabs>
     </div>
 
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
 import CourseAssignmentRow from './CourseAssignmentRow'
 import {mapGetters, mapActions} from 'vuex'
 import LoadingSpinner from '../components/LoadingSpinner'
 import AuthorizedDiv from '../components/AuthorizedDiv'
+import StudentTable from '../student/StudentTable'
+import AssignmentTable from '../assignment/AssignmentTable'
 
 export default {
   name: 'Course',
+  data () {
+    return {
+      student_fields: {
+        name: {
+          key: 'student.name',
+          label: 'Name',
+          class: 'student-name'
+        },
+        email: {
+          key: 'student.email',
+          label: 'Student Email'
+        },
+        slack_id: {
+          key: 'student.slack_id',
+          label: 'Slack'
+        },
+        github: {
+          key: 'student.github_username',
+          label: 'GitHub Username'
+        },
+        student_id: {
+          key: 'student.student_id',
+          label: 'Student ID'
+        },
+        canvas_id: {
+          key: 'student.canvas_id',
+          label: 'Canvas ID',
+          class: 'right-aligned'
+        }
+      }
+    }
+  },
   props: ['id'],
-  components: {AuthorizedDiv, LoadingSpinner, CourseAssignmentRow},
+  components: {AuthorizedDiv, LoadingSpinner, CourseAssignmentRow, StudentTable, AssignmentTable},
   computed: {
     ...mapGetters({
       courseInfo: 'course/find',
@@ -76,6 +96,10 @@ export default {
 
     course: function () {
       return this.$store.getters['course/find'](this.id)
+    },
+
+    students: function () {
+      return _.map(this.course.enrollments, (enrollment) => enrollment.student)
     }
   },
   methods: {
@@ -83,6 +107,7 @@ export default {
   },
   mounted () {
     if (!this.loaded) {
+      console.log('course: ', this.course)
       this.fetch_courses()
         .catch(error => {
           console.log('error: ', error)
@@ -114,33 +139,23 @@ export default {
     padding-left: 7px;
   }
 
-  .assignments-table {
-    display: table;
-    margin-top: 10px;
-  }
-
-  .assignments-row {
-    display: table-row;
-  }
-
-  .assignments-name, .assignments-due, .assignments-open, .assignments-close {
-    display: table-cell;
-  }
-
-  .assignments-due, .assignments-open, .assignments-close {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
-  .header {
-    font-weight: bold;
-  }
-
-  .assignments-label {
-    padding-top: 25px;
+  .course-name {
+    text-align: center;
   }
 
   .edit-link {
-    margin-top: 45px;
+    margin-top: 35px;
+    text-align: center;
+  }
+
+  .students-table {
+    margin: 20px;
+  }
+
+</style>
+
+<style>
+  .right-aligned {
+    text-align: right;
   }
 </style>

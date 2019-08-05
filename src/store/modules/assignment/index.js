@@ -2,6 +2,13 @@ import Vue from 'vue'
 import lazy from '../../../lib/vclazygrader'
 import _ from 'lodash'
 
+const defaultValues = () => {
+  return {
+    collection: [],
+    loaded: false
+  }
+}
+
 export default {
   namespaced: true,
   state: {
@@ -30,8 +37,16 @@ export default {
       state.loaded = true
     },
 
+    update: function (state, data) {
+      state.collection = _.union(state.collection, data)
+    },
+
     loaded: function (state, data) {
       state.loaded = data
+    },
+
+    reset: function (state) {
+      _.assign(state.collection, defaultValues())
     }
   },
 
@@ -48,6 +63,14 @@ export default {
     upload: function (context, data) {
       return Vue.axios.put(lazy.url(`assignments/${data.id}`), data, {headers: this.getters['user/headers']})
         .then(response => {
+          return Promise.resolve(response)
+        })
+    },
+
+    bulk: function (context, data) {
+      return Vue.axios.post(lazy.url('assignments/upload'), data)
+        .then(response => {
+          context.commit('update', response.data)
           return Promise.resolve(response)
         })
     },

@@ -1,5 +1,5 @@
 <template>
-  <div id="edit">
+  <div v-if="local_assignment != null" id="edit">
     <h1>Edit Assignment</h1>
       <div id="edit-form">
         <table>
@@ -61,27 +61,23 @@ import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'AssignmentForm',
-  data () {
-    return {
-      local_assignment: null
-    }
-  },
   computed: {
     ...mapState({
       loaded: state => state.assignment.loaded
     }),
     ...mapGetters({
       assignmentInfo: 'assignment/find'
-    })
+    }),
+
+    local_assignment: function () {
+      return this.$store.getters['assignment/find'](this.$route.params.id)
+    }
   },
   methods: {
     ...mapActions({
       fetch: 'assignment/fetch',
       upload: 'assignment/upload'
     }),
-    update: function () {
-      this.local_assignment = this.assignmentInfo(this.$route.params.id)
-    },
     handleSubmit: function () {
       if (this.local_assignment.name === '' || this.local_assignment.invitation_url === '' || this.local_assignment.open_date == null || this.local_assignment.close_date == null || this.local_assignment.due_date === '') {
         this.$notify({
@@ -104,9 +100,6 @@ export default {
     },
     cancelSubmit: function () {
       this.fetch()
-        .then(response => {
-          this.update()
-        })
       this.$router.push({name: 'assignment', params: {id: this.local_assignment.id}})
       this.$notify({
         group: 'edit',
@@ -119,11 +112,6 @@ export default {
   mounted () {
     if (!this.loaded) {
       this.fetch()
-        .then(response => {
-          this.update()
-        })
-    } else {
-      this.update()
     }
   }
 }

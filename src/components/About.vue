@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <div id="about" class="centered">
     <h1>About</h1>
     <p>LazyGrader website created by Allan & Todd Knight</p>
     <p class="link">Github:  </p><a href="https://github.com/ProfKnight/LazyGrader">https://github.com/ProfKnight/LazyGrader</a>
@@ -15,5 +15,9 @@ export default {
 <style scoped>
   #about p.link, #about a{
     display:inline-block;
+  }
+
+  .centered {
+    text-align: center;
   }
 </style>

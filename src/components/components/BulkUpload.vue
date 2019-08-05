@@ -25,13 +25,15 @@ export default {
       const file = this.$refs.bulkUpload.files[0]
       const fileName = this.$refs.bulkUpload.value
       const fileExtension = fileName.replace(/^.*\./, '')
+      console.log('resource type: ', this.resource_type)
       const config = {
         header: true,
         worker: true,
         skipEmptyLines: true,
         complete: function (results, file) {
           console.log('Parsed: ', results, file)
-          this.$store.dispatch(`${this.resource_type}/bulk`, {students: results.data})
+          console.log('resource type: ', this.resource_type)
+          this.$store.dispatch(`${this.resource_type}/bulk`, {resources: results.data})
             .then(response => {
               console.log('new students: ', response)
             })

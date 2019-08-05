@@ -80,7 +80,7 @@ export default {
     bulk: function (context, data) {
       return Vue.axios.post(lazy.url('students/upload'), data)
         .then(response => {
-          context.commit('update', response.data)
+          context.commit('update', response.data.students)
           return Promise.resolve(response)
         })
     }

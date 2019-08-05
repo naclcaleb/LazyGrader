@@ -1,78 +1,65 @@
 <template>
-  <div>
+  <div class="center-page">
     <h1>{{ title }}</h1>
     <authenticated-div>
-      <bulk-upload></bulk-upload>
-      <div class="students-table">
-        <div class="student-row">
-          <div class="student-name header">Name</div>
-          <div class="student-email header">Email</div>
-          <div class="student-student_id header">Student ID</div>
-          <div class="student-slack_id header">Slack ID</div>
-          <div class="student-github_username header">Github ID</div>
-          <div class="student-canvas_id header">Canvas ID</div>
-        </div>
-        <student-row v-for="student in students" :student="student" :key="student.id" />
-      </div>
+      <bulk-upload class="bulk-upload"></bulk-upload>
+      <b-tabs>
+        <b-tab v-for="course in courses" :key="course.id" :title="course.course_info.short_name">
+          <h3 class="course-title">{{course.course_info.long_name}}</h3>
+          <student-table :students="course.enrollments" :course="course"></student-table>
+        </b-tab>
+      </b-tabs>
     </authenticated-div>
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import StudentRow from './StudentRow'
 import AuthenticatedDiv from '../components/AuthenticatedDiv'
-import AuthorizedDiv from '../components/AuthorizedDiv'
 import bulkUpload from '../components/BulkUpload'
+import StudentTable from './StudentTable'
 
 export default {
   name: 'Students',
-  components: {AuthorizedDiv, AuthenticatedDiv, StudentRow, bulkUpload},
-  data () {
-    return {
-      title: 'Ventura College Students',
-      loaded: false
-    }
-  },
+  components: {AuthenticatedDiv, bulkUpload, StudentTable},
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role,
-      students: state => state.student.collection,
-      students_loaded: state => state.student.loaded
-    })
+      courses: state => state.course.collection,
+      students_loaded: state => state.course.loaded
+    }),
+    title () {
+      return this.$store.state.settings.settings.college_name + ' Students'
+    }
   },
   methods: {
     ...mapActions({
+      fetch_courses: 'course/fetch',
       fetch: 'student/fetch'
     })
   },
   mounted () {
+    this.fetch()
     if (!this.students_loaded) {
-      this.fetch()
-        .then(response => {
-          this.loaded = true
-        })
+      this.fetch_courses()
     }
   }
 }
 </script>
 
 <style scoped>
-.students-table {
-  display: table;
-  margin: auto;
+
+.center-page {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-.header {
-  font-weight: bold;
+.course-title {
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
-.student-row {
-  display: table-row;
-}
-
-.student-name, .student-email, .student-student_id, .student-slack_id, .student-github_username, .student-canvas_id {
-  display: table-cell;
+.bulk-upload {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 </style>

@@ -1,23 +1,16 @@
 <template>
-  <div>
+  <div class="centered-page">
     <h1>Assignments</h1>
-    <bulk-upload></bulk-upload>
-    <div v-for="course in courses" :key="course.id">
-      <h3>{{course.course_info.short_name}} - {{course.course_info.long_name}}</h3>
-      <div class="assignments-table">
-        <div class="assignment-row" v-for="assignment in course.assignments" :key="assignment.id">
-          <div class="assignment-name">
-            <router-link :to="{name: 'assignment', params: {id: assignment.id}}">{{assignment.name}}</router-link>
-          </div>
-          <div class="assignment-due_date">
-            {{assignment.due_date | formatDate}}
-          </div>
-          <div class="assignment-invitation">
-            <a :href="assignment.invitation_url">GitHub Classroom</a>
-          </div>
-        </div>
+    <bulk-upload class="bulk-upload" :resource_type="'assignment'"></bulk-upload>
+
+    <b-tabs>
+      <div v-for="course in courses" :key="course.id">
+        <b-tab :title="course.course_info.short_name">
+          <h3 class="course-title">{{course.course_info.long_name}}</h3>
+          <assignment-table :assignments="course.assignments"></assignment-table>
+`       </b-tab>
       </div>
-    </div>
+    </b-tabs>
   </div>
 </template>
 
@@ -25,24 +18,32 @@
 import {mapState, mapActions} from 'vuex'
 import AuthorizedDiv from '../components/AuthorizedDiv'
 import BulkUpload from '../components/BulkUpload'
+import AssignmentTable from '../assignment/AssignmentTable'
 
 export default {
   name: 'Assignment',
-  components: {AuthorizedDiv, BulkUpload},
+  components: {AuthorizedDiv, BulkUpload, AssignmentTable},
   data () {
     return {
-      loading: true
+      assignment_fields: {
+        name: {},
+        due_date: {},
+        open_date: {},
+        close_date: {},
+        invitation_url: {
+          label: 'Invitation'
+        }
+      }
     }
   },
 
   computed: {
     ...mapState({
-      authenticated: state => state.user.authenticated,
-      role: state => state.user.user.role,
       courses: state => state.course.collection,
       courses_loaded: state => state.course.loaded
     })
   },
+
   methods: {
     ...mapActions({
       fetch_courses: 'course/fetch'
@@ -50,13 +51,8 @@ export default {
   },
 
   mounted () {
-    if (this.courses_loaded) {
-      this.loading = false
-    } else {
+    if (!this.courses_loaded) {
       this.fetch_courses()
-        .then(resonse => {
-          this.loading = false
-        })
     }
   }
 }
@@ -64,23 +60,18 @@ export default {
 </script>
 
 <style scoped>
-.assignments-table {
-  display: table;
-  margin: auto;
+.bulk-upload {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.assignment-row {
-  display: table-row;
+.course-title {
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
-.assignment-name, .assignment-due_date, .assignment-invitation {
-  display: table-cell;
-  text-align: left;
-  padding-right: 5px;
-  padding-left: 5px;
-}
-
-.assignment-name {
-  width: 195px;
+.centered-page {
+  text-align: center;
 }
 </style>
