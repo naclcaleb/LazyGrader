@@ -77,7 +77,7 @@ export default {
             text: 'Signed in as ' + this.current_user.email
           })
           this.$router.push({
-            name: 'courses'
+            name: 'home'
           })
         })
         .catch(error => {

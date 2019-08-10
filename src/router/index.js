@@ -5,6 +5,7 @@ import Course from '../components/course/Course'
 import CourseEdit from '../components/course/CourseEdit'
 import Students from '../components/student/index'
 import Student from '../components/student/Student'
+import ChangePassword from '../components/student/ChangePassword'
 import StudentEdit from '../components/student/StudentEdit'
 import About from '../components/About'
 import Settings from '../components/Settings'
@@ -67,6 +68,12 @@ const router = new Router({
       path: '/student/:id',
       name: 'student',
       component: Student,
+      props: true
+    },
+    {
+      path: '/student/:id/edit/password',
+      name: 'pswEdit',
+      component: ChangePassword,
       props: true
     },
     {

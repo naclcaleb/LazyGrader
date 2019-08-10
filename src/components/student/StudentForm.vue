@@ -33,6 +33,11 @@
           </td>
         </tr>
         <tr>
+          <td id="pswEdit">
+            <router-link :to="{name: 'pswEdit'}">Change Password</router-link>
+          </td>
+        </tr>
+        <tr>
           <td>
             <input type="submit" id="submit" v-on:click="handleSubmit">
             <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
@@ -103,5 +108,13 @@ export default {
   }
   #submit{
     margin-right: 20px;
+  }
+  #student-github-username{
+    margin-bottom: 0;
+  }
+  #pswEdit{
+    font-size: 12px;
+    padding: 0;
+    text-align: left;
   }
 </style>

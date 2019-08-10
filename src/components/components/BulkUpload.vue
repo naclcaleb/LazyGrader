@@ -1,7 +1,7 @@
 <template>
   <authorized-div :role="'admin'">
-    <label for="bulkUpload"></label>
-    <input id="bulkUpload" type="file" ref="bulkUpload" accept=".csv">
+    <label for="bulkUpload">{{ label }}</label>
+    <input id="bulkUpload" type="file" ref="bulkUpload" accept=".csv,.yml">
     <br>
     <button v-on:click="handleSubmit">Upload</button>
   </authorized-div>
@@ -10,6 +10,7 @@
 <script>
 import AuthorizedDiv from './AuthorizedDiv'
 import Papa from 'papaparse'
+import yaml from 'yaml'
 
 export default {
   name: 'BulkUpload',
@@ -18,14 +19,15 @@ export default {
     resource_type: {
       type: String,
       default: 'student'
-    }
+    },
+    label: String
   },
   methods: {
     handleSubmit: function () {
       const file = this.$refs.bulkUpload.files[0]
       const fileName = this.$refs.bulkUpload.value
       const fileExtension = fileName.replace(/^.*\./, '')
-      console.log('resource type: ', this.resource_type)
+      let reader = new FileReader()
       const config = {
         header: true,
         worker: true,
@@ -63,7 +65,11 @@ export default {
       if (fileExtension === 'csv') {
         Papa.parse(file, config)
       } else if (fileExtension === 'yml') {
-        // TODO parse yaml files
+        reader.onload = function (e) {
+          let text = reader.result
+          console.log(yaml.parse(text))
+        }
+        reader.readAsText(file)
       } else {
         console.log('Error, unsupported filetype')
         // TODO actually throw an error

@@ -20,7 +20,12 @@
         <td>
           <label for="psw"><b>Password</b></label>
           <br>
-          <input type="password" placeholder="Password" id="psw" required>
+          <input type="password" placeholder="Password" id="psw" v-on:change="checkPassword()" required>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p id="pswCheck"></p>
         </td>
       </tr>
       <tr>
@@ -47,8 +52,17 @@
 </template>
 
 <script>
+import lazy from '../lib/vclazygrader'
+
 export default {
-  name: 'Signup'
+  name: 'Signup',
+  methods: {
+    checkPassword: function () {
+      const psw = document.getElementById('newPsw').value
+      const view = document.getElementById('pswCheck')
+      lazy.check_password(psw, view)
+    }
+  }
 }
 </script>
 
