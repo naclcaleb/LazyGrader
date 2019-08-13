@@ -34,9 +34,11 @@
         <b-tab title="Assignments">
           <assignment-table :assignments="course.assignments"/>
         </b-tab>
+        <authorized-div :role="'admin'">
         <b-tab title="Students">
           <student-table :students="course.enrollments" :course="course"></student-table>
         </b-tab>
+        </authorized-div>
       </b-tabs>
     </div>
 
@@ -51,6 +53,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import AuthorizedDiv from '../components/AuthorizedDiv'
 import StudentTable from '../student/StudentTable'
 import AssignmentTable from '../assignment/AssignmentTable'
+import AuthenticatedDiv from '../components/AuthenticatedDiv'
 
 export default {
   name: 'Course',
@@ -87,7 +90,7 @@ export default {
     }
   },
   props: ['id'],
-  components: {AuthorizedDiv, LoadingSpinner, CourseAssignmentRow, StudentTable, AssignmentTable},
+  components: {AuthenticatedDiv, AuthorizedDiv, LoadingSpinner, CourseAssignmentRow, StudentTable, AssignmentTable},
   computed: {
     ...mapGetters({
       courseInfo: 'course/find',

@@ -41,6 +41,9 @@ export default {
     this.fetch()
     if (!this.students_loaded) {
       this.fetch_courses()
+        .then(resp => {
+          console.log('resp: ', resp)
+        })
     }
   }
 }

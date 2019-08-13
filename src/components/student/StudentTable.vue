@@ -39,6 +39,11 @@ export default {
           label: 'Name',
           class: 'left-aligned'
         },
+        plicker_number: {
+          key: 'plicker_number',
+          label: 'Plicker #',
+          class: 'right-aligned'
+        },
         email: {
           key: 'student.email',
           label: 'Student Email',

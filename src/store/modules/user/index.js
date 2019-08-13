@@ -114,6 +114,7 @@ export default {
           delete Vue.axios.defaults.headers.common['uid']
           this.commit('student/reset')
           this.commit('course/reset')
+          this.commit('assignment/reset')
           commit('reset')
         })
     }

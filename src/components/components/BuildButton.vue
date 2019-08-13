@@ -1,7 +1,8 @@
 <template>
-  <button class="build-button" @click="action_build($event.target, assignment, student)">
+  <b-btn variant="primary" class="build-button" @click="action_build($event.target, assignment, student)">
+    <b-spinner v-if="building" small></b-spinner>
     {{build_button_text}}
-  </button>
+  </b-btn>
 </template>
 
 <script>
@@ -11,7 +12,8 @@ export default {
   name: 'BuildButton',
   data () {
     return {
-      build_button_text: 'Build'
+      build_button_text: 'Build',
+      building: false
     }
   },
   props: {
@@ -59,9 +61,7 @@ export default {
     },
 
     action_build: function (target, assignment, student) {
-      target.disabled = true
-      var buttonText = target.innerText
-      target.innerText = 'Building...'
+      this.building = true
 
       lazy.build_assignment(student.id, assignment.id)
         .then(response => {
@@ -69,9 +69,8 @@ export default {
         }).catch(error => {
           this.build_failure(error)
         }).finally(function () {
-          target.disabled = false
-          target.innerText = buttonText
-        })
+          this.building = false
+        }.bind(this))
     }
   }
 }
@@ -80,16 +79,13 @@ export default {
 <style scoped>
   .build-button {
     margin-left: 4px;
-    width: 75px;
-    background-color: purple; /* Green */
     border: none;
-    color: white;
+    width: 75px;
     padding: 4px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
 
   .build-button:disabled {

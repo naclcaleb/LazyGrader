@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Edit Password</h1>
+  <div class="edit">
+    <h1 class="header">Edit Password</h1>
     <table>
       <tr>
         <td>
@@ -29,7 +29,7 @@
         </td>
       </tr>
       <tr>
-        <td>
+        <td class="buttons">
           <input type="submit" id="submit" v-on:click="handleSubmit">
           <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
         </td>
@@ -138,4 +138,19 @@ export default {
   #pswCheck{
     display: none;
   }
+
+  .header {
+    padding-top: 15px;
+    padding-bottom: 25px;
+  }
+
+  .buttons {
+    padding-top: 15px;
+    padding-bottom: 25px;
+  }
+
+  .edit {
+    text-align: center;
+  }
+
 </style>

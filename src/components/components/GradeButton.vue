@@ -1,7 +1,9 @@
 <template>
-  <button class="grade-button" @click="action_grade($event.target, assignment, student)">
+  <b-btn variant="info" class="grade-button" @click="action_grade($event.target, assignment, student)">
+    <b-spinner v-if="grading" small></b-spinner>
     {{grade_button_text}}
-  </button>
+    <b-badge v-if="score != null && !grading" variant="light">{{score}}</b-badge>
+  </b-btn>
 
 </template>
 
@@ -12,7 +14,9 @@ export default {
   name: 'GradeButton',
   data () {
     return {
-      grade_button_text: 'Grade'
+      grade_button_text: 'Grade',
+      grading: false,
+      score: null
     }
   },
   props: {
@@ -21,13 +25,10 @@ export default {
   },
   methods: {
     action_grade: function (target, assignment, student) {
-      target.disabled = true
-      var buttonText = target.innerText
-      target.innerText = 'Grading...'
-
+      this.grading = true
       lazy.grade_assignment(student.id, assignment.id)
         .then(function (response) {
-          this.$emit('update:grade_value', response.data.grade)
+          this.score = response.data.grade
           this.$notify({
             group: 'grade',
             title: 'Grading Result',
@@ -35,12 +36,17 @@ export default {
           })
         }.bind(this))
         .catch(function (error) {
-          console.log('Error grading: ', error)
-        })
+          this.$notify({
+            group: 'grade',
+            title: 'System Error',
+            text: `Error while grading assignment ${error.error}. Notify the instructor`,
+            type: 'warn'
+          })
+          this.score = error.response.data.grade
+        }.bind(this))
         .finally(function () {
-          target.disabled = false
-          target.innerText = buttonText
-        })
+          this.grading = false
+        }.bind(this))
     }
   }
 }
@@ -50,15 +56,12 @@ export default {
   .grade-button {
     margin-left: 4px;
     width: 75px;
-    background-color: dodgerblue; /* Green */
     border: none;
-    color: white;
     padding: 4px 8px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
 
   .grade-button:disabled {

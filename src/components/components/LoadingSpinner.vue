@@ -1,6 +1,6 @@
 <template>
   <div id="loading">
-    <img src="../../assets/loading.gif">
+    <b-spinner></b-spinner>
     <p id="text">Loading...</p>
   </div>
 </template>
@@ -16,6 +16,12 @@ img{
   max-width: 100%;
   height: 40px;
 }
+
+#loading {
+  margin-top: 25px;
+  text-align: center;
+}
+
   #text{
     text-align: center;
   }

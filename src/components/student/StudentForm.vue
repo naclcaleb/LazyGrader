@@ -1,6 +1,6 @@
 <template>
   <div id="edit">
-    <h1>Edit Student</h1>
+    <h1 class="header">Edit Student</h1>
     <div v-if="local_student == null"><loading-spinner></loading-spinner></div>
     <div v-else id="edit-form">
       <table>
@@ -33,14 +33,14 @@
           </td>
         </tr>
         <tr>
-          <td id="pswEdit">
-            <router-link :to="{name: 'pswEdit'}">Change Password</router-link>
+          <td class="buttons">
+            <input type="submit" id="submit" v-on:click="handleSubmit">
+            <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
           </td>
         </tr>
         <tr>
-          <td>
-            <input type="submit" id="submit" v-on:click="handleSubmit">
-            <input type="reset" id="cancel" v-on:click="cancelSubmit" value="Cancel">
+          <td id="pswEdit">
+            <router-link :to="{name: 'pswEdit'}">Change Password</router-link>
           </td>
         </tr>
       </table>
@@ -113,8 +113,22 @@ export default {
     margin-bottom: 0;
   }
   #pswEdit{
-    font-size: 12px;
+    font-size: 15px;
     padding: 0;
     text-align: left;
+  }
+
+  .header {
+    padding-top: 15px;
+    margin-bottom: 25px;
+  }
+
+  .buttons {
+    padding-top: 15px;
+    padding-bottom: 25px;
+  }
+
+  #edit {
+    text-align: center;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>Log In</h1>
+    <h1 class="header">Log In</h1>
     <div v-if="authenticated">
       <router-link :to="{name: 'home'}">Home</router-link>
     </div>
@@ -99,6 +99,17 @@ export default {
 </script>
 
 <style scoped>
+  .header {
+    padding-top: 15px;
+    padding-bottom: 25px;
+  }
+
+  #login {
+    text-align: center;
+  }
+  #loginBtn {
+    margin-top: 15px;
+  }
   #login, #login #uname, #login #psw, #login #loginBtn, #login #remember{
     margin-bottom: 5px;
   }
