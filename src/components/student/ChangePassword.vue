@@ -4,16 +4,14 @@
     <table>
       <tr>
         <td>
-          <label for="oldPsw"><b>Old Password:</b></label>
-          <br>
-          <input type="password" id="oldPsw" placeholder="Old Password" required>
+          <label for="oldPsw"><b>Old Password:</b></label><br>
+          <input type="password" v-model="password.old_password" id="oldPsw" placeholder="Old Password" required>
         </td>
       </tr>
       <tr>
         <td>
-          <label for="newPsw"><b>New Password:</b></label>
-          <br>
-          <input type="password" id="newPsw" placeholder="New Password" v-on:change="checkPassword()" required>
+          <label for="newPsw"><b>New Password:</b></label><br>
+          <input type="password" v-model="password.new_password" id="newPsw" placeholder="New Password" required @change="checkPassword">
         </td>
       </tr>
       <tr>
@@ -23,9 +21,8 @@
       </tr>
       <tr>
         <td>
-          <label for="newPswConf"><b>Confirm Password:</b></label>
-          <br>
-          <input type="password" id="newPswConf" placeholder="New Password" required>
+          <label for="newPswConf"><b>Confirm Password:</b></label><br>
+          <input type="password" v-model="password.new_password_conf" id="newPswConf" placeholder="New Password" required>
         </td>
       </tr>
       <tr>
@@ -39,13 +36,20 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import lazy from '../../lib/vclazygrader'
+
 export default {
   name: 'ChangePassword',
   data () {
     return {
-      local_student: null
+      local_student: null,
+      password: {
+        id: 0,
+        old_password: '',
+        new_password: '',
+        new_password_conf: ''
+      }
     }
   },
   computed: {
@@ -57,12 +61,13 @@ export default {
     this.local_student = this.findStudent(this.$route.params.id)
   },
   methods: {
+    ...mapActions({
+      change_password: 'student/change_password'
+    }),
     handleSubmit: function () {
-      const oldPsw = document.getElementById('oldPsw').value
-      const newPsw = document.getElementById('newPsw').value
-      const newPswConf = document.getElementById('newPswConf').value
-      if (this.checkValid(oldPsw, newPsw, newPswConf)) {
-        console.log('Old Password: ' + oldPsw + '\nNewPassword: ' + newPsw)
+      if (this.checkValid(this.password.old_password, this.password.new_password, this.password.new_password_conf)) {
+        this.password.id = this.local_student.id
+        this.change_password(this.password)
         this.$notify({
           group: 'edit',
           title: 'Password Changed',
@@ -112,7 +117,7 @@ export default {
       return valid
     },
     checkPassword: function () {
-      const psw = document.getElementById('newPsw').value
+      const psw = this.password.new_password
       const view = document.getElementById('pswCheck')
       lazy.check_password(psw, view)
     }

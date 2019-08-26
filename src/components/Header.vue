@@ -33,14 +33,11 @@ export default {
 
     handleSignOut: function () {
       this.signOut()
-        .then(response => {
-          console.log('Signed out: ', response)
-        })
         .catch(error => {
           console.log('Error while signing out: ', error)
         })
         .finally(() => {
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'login'})
         })
     }
   }

@@ -7,6 +7,9 @@
 
       <template slot="student.name" slot-scope="data">
         <router-link class='right-aligned' :to="{name:'student', params: {id: data.item.student_id}}">{{data.value}}</router-link>
+        <a :href="`mailto:${data.item.student.email}`">
+          <img alt="send email" width="16px" :src="require('../../assets/mail.svg')">
+        </a>
       </template>
 
       <template slot="student.canvas_id" slot-scope="data">
@@ -31,22 +34,14 @@ export default {
   data () {
     return {
       fields: {
-        index: {
-          key: 'index'
-        },
-        name: {
-          key: 'student.name',
-          label: 'Name',
-          class: 'left-aligned'
-        },
         plicker_number: {
           key: 'plicker_number',
           label: 'Plicker #',
           class: 'right-aligned'
         },
-        email: {
-          key: 'student.email',
-          label: 'Student Email',
+        name: {
+          key: 'student.name',
+          label: 'Name',
           class: 'left-aligned'
         },
         slack_id: {
@@ -56,11 +51,6 @@ export default {
         github: {
           key: 'student.github_username',
           label: 'GitHub Username'
-        },
-        student_id: {
-          key: 'student.student_id',
-          label: 'Student ID',
-          class: 'right-aligned'
         },
         canvas_id: {
           key: 'student.canvas_id',

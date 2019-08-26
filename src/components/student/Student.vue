@@ -9,16 +9,6 @@
 
       <table class="student-table">
         <tr class="student-row">
-          <th class="label">Email:</th>
-          <td class="student-email">{{ student.email }}</td>
-          <copy-button :copyText="student.email"></copy-button>
-        </tr>
-        <tr class="student-row">
-          <th class="label">Student ID:</th>
-          <td class="student-student_id">{{ student.student_id }}</td>
-          <copy-button :copyText="student.student_id"></copy-button>
-        </tr>
-        <tr class="student-row">
           <th class="label">Slack ID:</th>
           <td class="student-slack_id">{{ student.slack_id }}</td>
           <copy-button :copyText="student.slack_id"></copy-button>
@@ -114,6 +104,8 @@ export default {
 .student-email, .student-student_id, .student-slack_id, .student-github_username, .student-canvas_id {
   display: table-cell;
   text-align: center;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .label {

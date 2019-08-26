@@ -1,6 +1,6 @@
 <template>
   <div class="course-name">
-    {{ course.course_info.long_name }} Assignments
+    {{ course.course_info.long_name }} Assignments (Plicker #{{plicker}})
     <div class="assignment-table">
     <student-assignment-row v-for="assignment in assignments" :assignment="assignment" :key="assignment.id" :student="student"/>
     </div>
@@ -21,7 +21,8 @@ export default {
   },
   props: {
     course: Object,
-    student: Object
+    student: Object,
+    plicker: Number
   },
   methods: {
     ...mapActions({

@@ -91,9 +91,6 @@ export default {
           })
         })
     }
-  },
-  mounted () {
-    console.log('Role: ', this.user)
   }
 }
 </script>

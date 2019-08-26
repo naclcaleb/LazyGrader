@@ -6,9 +6,6 @@
     <div class="student-email">
       {{student.email}}
     </div>
-    <div class="student-student_id">
-      {{student.student_id}}
-    </div>
     <div class="student-slack_id">
       {{student.slack_id}}
     </div>

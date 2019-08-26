@@ -83,6 +83,13 @@ export default {
           context.commit('update', response.data.students)
           return Promise.resolve(response)
         })
+    },
+
+    change_password: function (context, data) {
+      return Vue.axios.post(lazy.url('students/change_password'), data)
+        .then(response => {
+          return Promise.resolve(response)
+        })
     }
   }
 }
