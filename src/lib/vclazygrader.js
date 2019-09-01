@@ -18,6 +18,10 @@ const lazy = {
     return lazyRequestPromise(`/students/${studentId}/grade/${assignmentId}`)
   },
 
+  get_grade_for_assignment: function (studentId, assignmentId) {
+    return lazyRequestPromise(`/students/${studentId}/get_grade/${assignmentId}`)
+  },
+
   start_assignment: function (assignmentId, studentId) {
     return lazyRequestPromise(`/students/${studentId}/start/${assignmentId}`)
   },

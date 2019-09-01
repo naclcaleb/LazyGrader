@@ -1,6 +1,6 @@
 <template>
   <div class="course-name">
-    {{ course.course_info.long_name }} Assignments (Plicker #{{plicker}})
+    {{ course.course_info.long_name }} Assignments (Plicker #<a target="_blank" :href="'http://assets.plickers.com/plickers-cards/PlickersCards_1up_1-63.pdf#page=' + plicker">{{plicker}}</a>)
     <div class="assignment-table">
     <student-assignment-row v-for="assignment in assignments" :assignment="assignment" :key="assignment.id" :student="student"/>
     </div>

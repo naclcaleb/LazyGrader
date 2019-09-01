@@ -1,8 +1,8 @@
 <template>
   <div class="students-table">
     <b-table small :items="students" :fields="fields">
-      <template slot="index" slot-scope="data">
-        {{data.index + 1}}
+      <template slot="plicker_number" slot-scope="data">
+        {{data.plicker_number}}
       </template>
 
       <template slot="student.name" slot-scope="data">

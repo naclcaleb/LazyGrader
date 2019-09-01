@@ -2,7 +2,7 @@
   <b-btn variant="info" class="grade-button" @click="action_grade($event.target, assignment, student)">
     <b-spinner v-if="grading" small></b-spinner>
     {{grade_button_text}}
-    <b-badge v-if="score != null && !grading" variant="light">{{score}}</b-badge>
+    <b-badge v-if="score != null" variant="light">{{score}}</b-badge>
   </b-btn>
 
 </template>
@@ -22,6 +22,14 @@ export default {
   props: {
     assignment: Object,
     student: Object
+  },
+  mounted () {
+    lazy.get_grade_for_assignment(this.student.id, this.assignment.id)
+      .then(function (response) {
+        if (response.data.grade > 0) {
+          this.score = response.data.grade
+        }
+      }.bind(this))
   },
   methods: {
     action_grade: function (target, assignment, student) {
