@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import words from '../lib/en'
 
 const backendHost = 'localhost:3000'
 const apiPrefix = 'api/v1'
@@ -39,8 +38,6 @@ const lazy = {
     let specialCount = 0
     let leetCharCount = 0
     let translatedPsw
-    let translatedWordsArr
-    let wordCount = 0
     let pswStrength
     let strengthStr
     pswArr.forEach(function (el, index, arr) {
@@ -77,14 +74,6 @@ const lazy = {
       }
     })
     translatedPsw = pswArr.join('')
-    translatedWordsArr = translatedPsw.split(' ')
-    translatedWordsArr.forEach(function (el) {
-      words.forEach(function (word) {
-        if (el === word) {
-          wordCount++
-        }
-      })
-    })
     let dataArr = [capitalCount + 0.5, lowerCount, numberCount + 1, specialCount + 2, leetCharCount]
     let sum = dataArr.reduce(function (sum, value) {
       return sum + value
@@ -97,8 +86,8 @@ const lazy = {
       return sum + value
     }, 0) / diffs.length
     let stdDev = Math.sqrt(avgSquareDiff)
-    pswStrength = stdDev + (10 / pswLength) + (wordCount / 2)
-    if (pswStrength >= 0 && pswStrength <= 0.7) {
+    pswStrength = 4.0 / stdDev + (10.0 / pswLength)
+    if (pswStrength <= 0.7) {
       strengthStr = 'Password Strength: Iron-clad'
     } else if (pswStrength > 0.7 && pswStrength <= 1.4) {
       strengthStr = 'Password Strength: Very Strong'
