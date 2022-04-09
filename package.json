@@ -19,7 +19,7 @@
     "bootstrap-vue": "^2.0.0-rc.27",
     "fs": "0.0.1-security",
     "lodash": "^4.17.19",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "papaparse": "^5.2.0",
     "vue": "^2.5.2",
     "vue-axios": "^2.1.4",
